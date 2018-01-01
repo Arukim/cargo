@@ -11,7 +11,7 @@ namespace Cargo.Client.Persisting
     
     public class CargoDbContext : DbContext
     {
-        public CargoDbContext() : base()
+        public CargoDbContext() : base("CargoContext")
         {
             Database.SetInitializer(new CargoDbInitializer());
         }

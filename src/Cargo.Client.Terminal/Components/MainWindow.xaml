@@ -4,22 +4,17 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Cargo.Client.Terminal.Components"
+        xmlns:orders="clr-namespace:Cargo.Client.Terminal.Components.Orders"
+        xmlns:batch="clr-namespace:Cargo.Client.Terminal.Components.Batch"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Title="Cargo" Height="600" Width="800" WindowState="Normal" WindowStartupLocation="CenterScreen">
     <DockPanel LastChildFill="True">
         <Menu Width="Auto" DockPanel.Dock="Top" />
         <ToolBar Width="Auto" DockPanel.Dock="Bottom" />
         <StatusBar DockPanel.Dock="Bottom" />
 
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="0.5*" />
-                <RowDefinition Height="0.5*" />
-            </Grid.RowDefinitions>
-
-            <local:PartsControl Grid.Row="0"/>
-            <ListView Name="clipListView" Grid.Row="1" />
-        </Grid>
+        <orders:OrdersControl DockPanel.Dock="Left"/>
+        <batch:BatchControl DockPanel.Dock="Right"/>
     </DockPanel>
 
 </Window>
