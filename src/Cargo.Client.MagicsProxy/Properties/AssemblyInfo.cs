@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Cargo.Client.Persisting")]
+[assembly: AssemblyTitle("Cargo.Client.MagicsProxy")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]
-[assembly: AssemblyProduct("Cargo.Client.Persisting")]
+[assembly: AssemblyProduct("Cargo.Client.MagicsProxy")]
 [assembly: AssemblyCopyright("Copyright © Microsoft 2018")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("b5c06ef6-b86e-4dd7-ae35-65342469672b")]
+[assembly: Guid("d29e113e-ab6c-4ce4-b395-cdf44fc8083b")]
 
 // Version information for an assembly consists of the following four values:
 //
