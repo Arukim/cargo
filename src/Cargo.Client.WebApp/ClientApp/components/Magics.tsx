@@ -11,23 +11,48 @@ type MagicsProps =
     & RouteComponentProps<{}>; // ... plus incoming routing parameters
 
 class MagicsComponent extends React.Component<MagicsProps, {}> {
+    private timer: number;
     componentWillMount() {
         // This method runs when the component is first added to the page
         this.props.requestStatus();
     }
 
+    componentDidMount() {
+        this.timer = setInterval(() => this.props.requestStatus(), 1000);
+    }
+
+    componentWillUnmout() {
+        clearInterval(this.timer)
+    }
+
+    public renderState() {
+        var status = "";
+        switch (this.props.status.state) {
+            case "OK":
+                status = "Magics: запущен";
+                break;
+            case "OFFLINE":
+                status = "Magics: не запущен";
+                break;
+            case "MANY":
+                status = "Magics: открыто несколько приложений";
+                break;
+        }
+
+        return (<div className={this.props.status.state == "OK" ? "" : "error"} >
+            {status}
+        </div>);
+    }
+
     public render() {
         return <div>
-            {this.props.isLoading ?
-                null :
-                !this.props.status.isConnected ?
-                    <div>
-                        <div>Magics не запущен</div>
-                        <button onClick={x => this.props.requestStatus()} > Обновить </button>
-                    </div>
-
-                    : <div> Magics работает </div>
-            }
+            {this.renderState()}
+            <div>
+                Моделей загружено: {this.props.status.modelsCount}
+            </div>
+            <div>
+                Текущий объём: {this.props.status.modelsVolume} мм2
+            </div>
         </div>;
     }
 }

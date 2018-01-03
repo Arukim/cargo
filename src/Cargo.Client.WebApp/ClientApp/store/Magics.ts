@@ -11,7 +11,9 @@ export interface MagicsState {
 }
 
 export interface MagicsStatus {
-    isConnected: boolean;
+    state: string;
+    modelsCount: number;
+    modelsVolume: number;
 }
 
 // ACTIONS
@@ -42,7 +44,13 @@ export const actionCreators = {
     }
 };
 
-const unloadedState: MagicsState = {status: {isConnected: false}, isLoading: false };
+const unloadedState: MagicsState = {
+    status: {
+        state: "OFFLINE",
+        modelsCount: 0,
+        modelsVolume: 0
+    }, isLoading: false
+};
 
 export const reducer: Reducer<MagicsState> = (state: MagicsState, incomingAction: Action) => {
     const action = incomingAction as KnownAction;
