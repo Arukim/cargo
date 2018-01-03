@@ -14,11 +14,11 @@ class MagicsComponent extends React.Component<MagicsProps, {}> {
     private timer: number;
     componentWillMount() {
         // This method runs when the component is first added to the page
-        this.props.requestStatus();
+        this.props.requestAppCount();
     }
 
     componentDidMount() {
-        this.timer = setInterval(() => this.props.requestStatus(), 1000);
+        this.timer = setInterval(() => this.props.requestAppCount(), 1000);
     }
 
     componentWillUnmout() {
@@ -27,19 +27,19 @@ class MagicsComponent extends React.Component<MagicsProps, {}> {
 
     public renderState() {
         var status = "";
-        switch (this.props.status.state) {
-            case "OK":
+        switch (this.props.appCount) {
+            case 1:
                 status = "Magics: запущен";
                 break;
-            case "OFFLINE":
+            case 0:
                 status = "Magics: не запущен";
                 break;
-            case "MANY":
+            default:
                 status = "Magics: открыто несколько приложений";
                 break;
         }
 
-        return (<div className={this.props.status.state == "OK" ? "" : "error"} >
+        return (<div className={this.props.appCount == 1 ? "" : "error"} >
             {status}
         </div>);
     }

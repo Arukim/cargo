@@ -8,7 +8,6 @@ namespace Cargo.Client.MagicsProxy
 {
     public class MagicsStatus
     {
-        public string State { get; set; }
         public int ModelsCount { get; set; }
         public double ModelsVolume { get; set; }
     }

@@ -12,23 +12,13 @@ namespace Cargo.Client.MagicsProxy
 {
     public class MagicsProxy : IMagicsProxy
     {
+        public int AppCount()
+        {
+            return Process.GetProcessesByName("Magics").Count();
+        }
+
         public MagicsStatus GetStatus()
         {
-            var pname = Process.GetProcessesByName("Magics");
-            var procs = pname.Count();
-            if (procs == 0)
-                return new MagicsStatus
-                {
-                    State = "OFFLINE"
-                };
-
-            if (procs > 1)
-                return new MagicsStatus
-                {
-                    State = "MANY"
-                };
-
-
             var magics = new ApplicationMagics();
             try
             {
@@ -38,7 +28,6 @@ namespace Cargo.Client.MagicsProxy
 
                 return new MagicsStatus
                 {
-                    State = "OK",
                     ModelsCount = numOfStl,
                     ModelsVolume = volume
                 };

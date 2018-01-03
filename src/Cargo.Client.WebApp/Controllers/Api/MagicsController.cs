@@ -17,9 +17,15 @@ namespace Cargo.Client.WebApp.Controllers.Api
         {
             this.magics = magics;
         }
+       
+        [HttpGet("[action]")]
+        public int AppCount()
+        {
+            return magics.AppCount();
+        }
 
-        [HttpGet]
-        public MagicsStatus GetStatus()
+        [HttpGet("[action]")]
+        public MagicsStatus Status()
         {
             return magics.GetStatus();
         }

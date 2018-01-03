@@ -8,6 +8,7 @@ namespace Cargo.Client.MagicsProxy
 {
     public interface IMagicsProxy
     {
+        int AppCount();
         MagicsStatus GetStatus();
     }
 }
