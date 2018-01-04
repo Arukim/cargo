@@ -29,33 +29,67 @@ interface AddedOrderParts {
     orderParts: OrderPart[]
 }
 
+interface RemoveOrderParts {
+    type: 'REMOVE_ORDERPARTS'
+}
+
+interface RemovedOrderParts {
+    type: 'REMOVED_ORDERPARTS',
+    orderPartsIds: number[]
+}
+
 type KnownAction = RequestOrder | ReceiveOrder
-    | AddOrderParts | AddedOrderParts;
+    | AddOrderParts | AddedOrderParts
+    | RemoveOrderParts | RemovedOrderParts;
 
 export const actionCreators = {
-    requestOrder: (id: number): AppThunkAction<KnownAction> => (dispatch, getState) => {
-        let fetchTask = fetch(`api/Orders/${id}`)
-            .then(resp => resp.json() as Promise<Order>)
-            .then(data => {
-                dispatch({ type: 'RECEIVE_ORDER', order: data });
+    requestOrder: (id: number): AppThunkAction<KnownAction> =>
+        (dispatch, getState) => {
+            let fetchTask = fetch(`api/Orders/${id}`)
+                .then(resp => resp.json() as Promise<Order>)
+                .then(data => {
+                    dispatch({ type: 'RECEIVE_ORDER', order: data });
+                });
+            addTask(fetchTask);
+            dispatch({ type: 'REQUEST_ORDER' });
+        },
+    addOrderPart: (orderId: number, partId: number, count: number): AppThunkAction<KnownAction> =>
+        (dispatch, getState) => {
+            let fetchTask = fetch(`api/Orders/${orderId}/OrderParts/${partId}/${count}`,
+                {
+                    method: "POST"
+                })
+                .then(resp => resp.json() as Promise<OrderPart[]>)
+                .then(data => {
+                    dispatch({ type: 'ADDED_ORDERPARTS', orderParts: data });
+                });
+            addTask(fetchTask);
+            dispatch({
+                type: 'ADD_ORDERPARTS'
             });
-        addTask(fetchTask);
-        dispatch({ type: 'REQUEST_ORDER' });
-    },
-    addOrderPart: (orderId: number, partId: number, count: number): AppThunkAction<KnownAction> => (dispatch, getState) => {
-        let fetchTask = fetch(`api/Orders/${orderId}/AddOrderParts/${partId}/${count}`,
-            {
-                method: "POST"
-            })
-            .then(resp => resp.json() as Promise<OrderPart[]>)
-            .then(data => {
-                dispatch({ type: 'ADDED_ORDERPARTS', orderParts: data });
+        },
+    removeOrderParts: (orderId: number, orderPartsIds: number[]): AppThunkAction<KnownAction> =>
+        (dispatch, getState) => {
+            let fetchTask = fetch(`api/Orders/${orderId}/OrderParts`,
+                {
+                    method: "DELETE",
+                    headers: new Headers({ 'content-type': 'application/json' }),
+                    body: JSON.stringify({ orderPartsIds: orderPartsIds })
+                })
+                .then(resp => {
+                    if (resp.status == 200) {
+                        dispatch({
+                            type: 'REMOVED_ORDERPARTS',
+                            orderPartsIds: orderPartsIds
+                        });
+                    }
+                });
+            addTask(fetchTask);
+            dispatch({
+                type: 'REMOVE_ORDERPARTS'
             });
-        addTask(fetchTask);
-        dispatch({
-            type: 'ADD_ORDERPARTS'            
-        });
-    }
+        }
+
 };
 
 const unloadedState: OrderState = {
@@ -86,6 +120,16 @@ export const reducer: Reducer<OrderState> = (state: OrderState, incomingAction: 
                     orderParts: [...state.order.orderParts, ...action.orderParts]
                 }
             };
+        case 'REMOVE_ORDERPARTS':
+            return state;
+        case 'REMOVED_ORDERPARTS':
+            return {
+                ...state,
+                order: {
+                    ...state.order,
+                    orderParts: state.order.orderParts.filter(x => !action.orderPartsIds.some(o => o == x.id))
+                }
+            }
         default:
             const exhaustiveCheck: never = action;
     }

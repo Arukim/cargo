@@ -53,13 +53,22 @@ class OrderComponent extends React.Component<OrdersProps, {}> {
                 <tr>
                     <th>Id</th>
                     <th>Название модели</th>
+                    <th>Действия</th>
                 </tr>
             </thead>
             <tbody>
-                {this.order.orderParts.map((op,idx) =>
+                {this.order.orderParts.map((op, idx) =>
                     <tr key={idx}>
                         <td>{op.id}</td>
                         <td>{op.part.name}</td>
+                        <td>
+                            <div>
+                                <button className="btn btn-warning"
+                                    onClick={() => this.props.removeOrderParts(this.order.id, [op.id])}>
+                                    Удалить
+                                    </button>
+                            </div>
+                        </td>
                     </tr>
                 )}
             </tbody>

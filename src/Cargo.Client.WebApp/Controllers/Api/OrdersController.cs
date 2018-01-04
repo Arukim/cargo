@@ -38,7 +38,7 @@ namespace Cargo.Client.WebApp.Controllers.Api
             return await Orders.FirstOrDefaultAsync(x => x.Id == id);
         }
 
-        [HttpPost("{orderId}/[action]/{partId}/{count}")]
+        [HttpPost("{orderId}/OrderParts/{partId}/{count}")]
         public async Task<IActionResult> AddOrderParts(int orderId, int partId, int count)
         {
             if (count < 0)
@@ -69,5 +69,34 @@ namespace Cargo.Client.WebApp.Controllers.Api
 
             return Ok(newOrderParts);
         }
+
+        [HttpDelete("{orderId}/orderParts")]
+
+        public async Task<IActionResult> RemoveOrderParts(int orderId,
+            [FromBody] RemoveOrderParts request)
+        {
+            var order = await ctx.Orders
+                .Include(x => x.OrderParts)
+                .FirstOrDefaultAsync(x => x.Id == orderId);
+
+            if (order == null)
+                return BadRequest($"no order with id:{orderId} exists");
+
+            var toRemove = order.OrderParts
+                .Where(x => request.OrderPartsIds.Contains(x.Id))
+                .ToList();
+
+            ctx.OrderParts.RemoveRange(toRemove);
+
+            await ctx.SaveChangesAsync();
+
+            return Ok();
+        }
+    }
+
+
+    public class RemoveOrderParts
+    {
+        public List<int> OrderPartsIds { get; set; }
     }
 }
