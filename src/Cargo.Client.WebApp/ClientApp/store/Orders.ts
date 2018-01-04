@@ -1,6 +1,7 @@
 ﻿import { fetch, addTask } from 'domain-task';
 import { Action, Reducer, ActionCreator } from 'redux';
 import { AppThunkAction } from './';
+import { Order } from 'ClientApp/models';
 
 // -----------------
 // STATE - This defines the type of data maintained in the Redux store.
@@ -8,17 +9,6 @@ import { AppThunkAction } from './';
 export interface OrdersState {
     isLoading: boolean;
     orders: Order[];
-}
-
-export interface Order {
-    id: string;
-    name: string;
-    ordersParts: OrderPart[];
-}
-
-export interface OrderPart {
-    id: string;
-    name: string;
 }
 
 // ACTIONS

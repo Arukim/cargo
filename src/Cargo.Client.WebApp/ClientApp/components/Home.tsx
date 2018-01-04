@@ -1,5 +1,5 @@
 ﻿import * as React from 'react';
-import { RouteComponentProps } from 'react-router-dom';
+import { RouteComponentProps, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { ApplicationState } from '../store';
 import * as Orders from '../store/Orders';
@@ -22,14 +22,20 @@ class Home extends React.Component<OrdersProps, {}> {
             <thead>
                 <tr>
                     <th>Id</th>
-                    <th>Name</th>
+                    <th>Заказчик</th>
+                    <th>Заказ</th>
+                    <th>Подробнее</th>
                 </tr>
             </thead>
             <tbody>
                 {this.props.orders.map(order =>
                     <tr key={order.id}>
                         <td>{order.id}</td>
+                        <td>{order.customer.name}</td>
                         <td>{order.name}</td>
+                        <td>
+                            <Link to={`/orders/${order.id}`} > Изменить </Link>
+                        </td>
                     </tr>
                 )}
             </tbody>

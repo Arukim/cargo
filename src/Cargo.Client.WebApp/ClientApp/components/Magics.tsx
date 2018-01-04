@@ -53,6 +53,11 @@ class MagicsComponent extends React.Component<MagicsProps, {}> {
             <div>
                 Текущий объём: {this.props.status.modelsVolume} мм2
             </div>
+            {
+                !this.props.isConnected ?
+                    <button onClick={() => this.props.requestStatus()} > Подключиться </button>
+                : null
+            }
         </div>;
     }
 }

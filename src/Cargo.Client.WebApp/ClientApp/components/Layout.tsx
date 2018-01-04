@@ -13,7 +13,8 @@ export class Layout extends React.Component<{}, {}> {
                 </div>
                 <div className='col-sm-9'>
                     <div className='col-sm-9'>
-                        <Magics />
+                        {// <Magics /> 
+                        }
                     </div>
                     {this.props.children}
                 </div>

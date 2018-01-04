@@ -6,6 +6,7 @@ using Cargo.Client.Persisting;
 using Cargo.Client.Persisting.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Cargo.Client.WebApp.Controllers.Api
 {
@@ -13,14 +14,28 @@ namespace Cargo.Client.WebApp.Controllers.Api
     [Route("api/Orders")]
     public class OrdersController : Controller
     {
+        private readonly CargoContext ctx;
+        public OrdersController(CargoContext ctx)
+        {
+            this.ctx = ctx;
+        }
+
+        public IQueryable<Order> Orders => ctx.Orders
+            .Include(x => x.Customer)
+                .Include(x => x.OrderParts)
+                    .ThenInclude(op => op.Part);
 
         [HttpGet]
-        public  IEnumerable<Order> GetAll()
+        public async Task<IEnumerable<Order>> GetAll()
         {
-            using(var ctx = new CargoContext())
-            {
-                return ctx.Orders.ToList();
-            }
+            return await Orders.ToListAsync();
+        }
+
+
+        [HttpGet("{id}")]
+        public async Task<Order> Get(int id)
+        {
+            return await Orders.FirstOrDefaultAsync(x => x.Id == id);
         }
     }
 }

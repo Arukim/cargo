@@ -31,7 +31,12 @@
 
   <ItemGroup>
     <None Remove="ClientApp\components\Magics.tsx" />
+    <None Remove="ClientApp\components\Order.tsx" />
+    <None Remove="ClientApp\components\Order\addOrderPart.tsx" />
+    <None Remove="ClientApp\models\index.ts" />
+    <None Remove="ClientApp\store\Customer.ts" />
     <None Remove="ClientApp\store\Magics.ts" />
+    <None Remove="ClientApp\store\Order.ts" />
     <None Remove="ClientApp\store\orders.ts" />
   </ItemGroup>
 
@@ -42,6 +47,11 @@
 
   <ItemGroup>
     <TypeScriptCompile Include="ClientApp\components\Magics.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\Order\addOrderPart.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\Order\index.tsx" />
+    <TypeScriptCompile Include="ClientApp\models\index.ts" />
+    <TypeScriptCompile Include="ClientApp\store\Order.ts" />
+    <TypeScriptCompile Include="ClientApp\store\Customer.ts" />
     <TypeScriptCompile Include="ClientApp\store\Magics.ts" />
     <TypeScriptCompile Include="ClientApp\store\Orders.ts" />
   </ItemGroup>

@@ -6,13 +6,8 @@ namespace Cargo.Client.Persisting
     public class CargoContext : DbContext
     {
         public static string ConnectionString { get; set; }
-        public CargoContext() : base()
+        public CargoContext(DbContextOptions<CargoContext> options) : base(options)
         {
-        }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlServer(ConnectionString);
         }
 
         public DbSet<Customer> Customers { get; set; }

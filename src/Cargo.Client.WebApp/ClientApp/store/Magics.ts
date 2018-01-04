@@ -1,6 +1,7 @@
 ﻿import { fetch, addTask } from 'domain-task';
 import { Action, Reducer, ActionCreator } from 'redux';
 import { AppThunkAction } from './';
+import { MagicsStatus } from 'ClientApp/models';
 
 // -----------------
 // STATE - This defines the type of data maintained in the Redux store.
@@ -12,10 +13,6 @@ export interface MagicsState {
     status: MagicsStatus;
 }
 
-export interface MagicsStatus {
-    modelsCount: number;
-    modelsVolume: number;
-}
 
 // ACTIONS
 
