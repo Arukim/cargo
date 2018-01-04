@@ -22,8 +22,8 @@ namespace Cargo.Client.WebApp.Controllers.Api
 
         public IQueryable<Order> Orders => ctx.Orders
             .Include(x => x.Customer)
-                .Include(x => x.OrderParts)
-                    .ThenInclude(op => op.Part);
+            .Include(x => x.OrderParts)
+                .ThenInclude(op => op.Part);
 
         [HttpGet]
         public async Task<IEnumerable<Order>> GetAll()
@@ -36,6 +36,38 @@ namespace Cargo.Client.WebApp.Controllers.Api
         public async Task<Order> Get(int id)
         {
             return await Orders.FirstOrDefaultAsync(x => x.Id == id);
+        }
+
+        [HttpPost("{orderId}/[action]/{partId}/{count}")]
+        public async Task<IActionResult> AddOrderParts(int orderId, int partId, int count)
+        {
+            if (count < 0)
+                return BadRequest($"count value of {count} is illegal");
+
+            var order = await ctx.Orders
+                .Include(x => x.OrderParts)
+                .FirstOrDefaultAsync(x => x.Id == orderId);
+
+            if (order == null)
+                return BadRequest($"no order with id:{orderId} exists");
+
+            var part = await ctx.Parts.FirstOrDefaultAsync(x => x.Id == partId);
+
+            if (part == null)
+                return BadRequest($"no part with id:{partId} exists");
+
+            var newOrderParts = Enumerable.Range(0, count)
+                .Select(x => new OrderPart
+                {
+                    Part = part,
+                    Order = order
+                }).ToList();
+
+            ctx.OrderParts.AddRange(newOrderParts);
+
+            await ctx.SaveChangesAsync();
+
+            return Ok(newOrderParts);
         }
     }
 }

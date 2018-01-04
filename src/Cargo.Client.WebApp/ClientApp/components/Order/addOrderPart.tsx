@@ -2,11 +2,12 @@
 import { RouteComponentProps, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { ApplicationState } from 'ClientApp/store';
-import { Customer } from '../../models';
+import { Customer, Part } from '../../models';
 import * as CustomerStore from '../../store/Customer';
 
 interface AddOrderPartOwnProps {
     customerId: number;
+    onAddOrderPart: (partId: number) => void;
 }
 
 interface AddOrderPartState {
@@ -42,6 +43,11 @@ class AddOrderPartComponent extends React.Component<AddOrderProps, AddOrderPartS
         }
     }
 
+    onAdd() {
+        var part = this.customer.parts.find(p => p.id == this.state.selectedPart) as Part;
+        this.props.onAddOrderPart(part.id);
+    }
+
     render() {
         return (
             <div>
@@ -49,13 +55,13 @@ class AddOrderPartComponent extends React.Component<AddOrderProps, AddOrderPartS
                     <div>
                         <div>
                             <select value={this.state.selectedPart} onChange={(x) => this.setState({ selectedPart: +x.target.value })}>
-                                {this.customer.parts.map(p =>
-                                    <option key={p.id} value={p.id}>{p.name}</option>
+                                {this.customer.parts.map((p, idx) =>
+                                    <option key={idx} value={idx}>{p.name}</option>
                                 )}
                             </select>
                         </div>
                         <div>
-                            <button> Добавить </button>
+                            <button onClick={() => this.onAdd()}> Добавить </button>
                         </div>
                     </div>
                 }

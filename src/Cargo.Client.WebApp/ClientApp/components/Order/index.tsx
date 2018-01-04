@@ -34,7 +34,11 @@ class OrderComponent extends React.Component<OrdersProps, {}> {
 
                         <div>
                             <p> Добавить новую деталь </p>
-                            <AddOrderPart customerId={this.order.customer.id} />
+                            <AddOrderPart
+                                customerId={this.order.customer.id}
+                                onAddOrderPart={(partId) =>
+                                    this.props.addOrderPart(this.order.id, partId, 2)}
+                            />
                         </div>
                         {this.renderOrderParts()}
                     </div>
