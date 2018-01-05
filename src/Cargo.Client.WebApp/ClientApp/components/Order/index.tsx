@@ -5,7 +5,8 @@ import { ApplicationState } from './../../store';
 import { Order } from 'ClientApp/models';
 import * as OrderStore from '../../store/Order';
 
-import { AddOrderPart } from './addOrderPart';
+import { AddOrderPart } from './AddOrderPart';
+import { CreatePart } from './CreatePart';
 
 // At runtime, Redux will merge together...
 type OrdersProps =
@@ -25,22 +26,27 @@ class OrderComponent extends React.Component<OrdersProps, {}> {
 
     public render() {
         return (
-            <div>
+            <div className="row">
                 {this.props.isLoading ? <p> Loading... </p> :
 
                     <div>
                         <h1>Заказ {this.order.name}</h1>
-                        <p>Редактирование заказа</p>
 
-                        <div>
-                            <p> Добавить новую деталь </p>
+                        <div className="col-xs-4">
                             <AddOrderPart
                                 customerId={this.order.customer.id}
-                                onAddOrderPart={(partId) =>
-                                    this.props.addOrderPart(this.order.id, partId, 2)}
+                                onAddOrderPart={(partId, count) =>
+                                    this.props.addOrderPart(this.order.id, partId, count)}
                             />
                         </div>
-                        {this.renderOrderParts()}
+                        <div className="col-xs-4">
+                            <CreatePart
+                                customerId={this.order.customer.id}
+                            />
+                        </div>
+                        <div className="col-lg-12">
+                            {this.renderOrderParts()}
+                        </div>
                     </div>
                 }
             </div>);

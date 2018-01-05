@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Cargo.Client.Persisting;
@@ -27,5 +28,41 @@ namespace Cargo.Client.WebApp.Controllers.Api
                     .Include(x => x.Parts)
                     .FirstOrDefaultAsync(x => x.Id == id);
         }
-    }
+
+        [HttpPost("{custId}/[action]")]
+        [RequestSizeLimit(100_000_000)]
+        public async Task<IActionResult> CreatePart(int custId, IFormFile file)
+        {
+            if (file == null || file.Length == 0)
+                return Content("file not selected");
+
+            var cust = await ctx.Customers
+                .FirstOrDefaultAsync(c => c.Id == custId);
+
+            if (cust == null)
+                return BadRequest("no such customer");
+
+            var path = Path.Combine(
+                        Directory.GetCurrentDirectory(), "wwwroot/upload", custId.ToString());
+            Directory.CreateDirectory(path);
+
+            var part = new Part { Name = file.FileName };
+            cust.Parts = new List<Part>();
+            cust.Parts.Add(part);
+            await ctx.SaveChangesAsync();
+            var filename = $"{part.Id}_{file.FileName}";
+            var filePath = Path.Combine(path, filename);
+            
+            using (var stream = new FileStream(filePath, FileMode.CreateNew))
+            {
+                await file.CopyToAsync(stream);
+            }
+
+            part.Name = file.FileName;
+            part.Filename = filename;
+            await ctx.SaveChangesAsync();
+
+            return Created("", new { Id = part.Id });
+        }
+    }   
 }

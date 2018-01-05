@@ -26,13 +26,18 @@
 
   <ItemGroup>
     <!-- Files not to publish (note that the 'dist' subfolders are re-added below) -->
+    <Compile Remove="wwwroot\upload\**" />
     <Content Remove="ClientApp\**" />
+    <Content Remove="wwwroot\upload\**" />
+    <EmbeddedResource Remove="wwwroot\upload\**" />
+    <None Remove="wwwroot\upload\**" />
   </ItemGroup>
 
   <ItemGroup>
     <None Remove="ClientApp\components\Magics.tsx" />
     <None Remove="ClientApp\components\Order.tsx" />
     <None Remove="ClientApp\components\Order\addOrderPart.tsx" />
+    <None Remove="ClientApp\components\Order\CreatePart.tsx" />
     <None Remove="ClientApp\models\index.ts" />
     <None Remove="ClientApp\store\Customer.ts" />
     <None Remove="ClientApp\store\Magics.ts" />
@@ -47,7 +52,8 @@
 
   <ItemGroup>
     <TypeScriptCompile Include="ClientApp\components\Magics.tsx" />
-    <TypeScriptCompile Include="ClientApp\components\Order\addOrderPart.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\Order\AddOrderPart.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\Order\CreatePart.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Order\index.tsx" />
     <TypeScriptCompile Include="ClientApp\models\index.ts" />
     <TypeScriptCompile Include="ClientApp\store\Order.ts" />

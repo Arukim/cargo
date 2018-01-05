@@ -7,11 +7,12 @@ import * as CustomerStore from '../../store/Customer';
 
 interface AddOrderPartOwnProps {
     customerId: number;
-    onAddOrderPart: (partId: number) => void;
+    onAddOrderPart: (partId: number, count: number) => void;
 }
 
 interface AddOrderPartState {
     selectedPart: number;
+    count: number;
 }
 
 // At runtime, Redux will merge together...
@@ -25,7 +26,8 @@ class AddOrderPartComponent extends React.Component<AddOrderProps, AddOrderPartS
     constructor(p: AddOrderProps) {
         super(p);
         this.state = {
-            selectedPart: -1
+            selectedPart: -1,
+            count: 1
         };
     }
 
@@ -45,7 +47,7 @@ class AddOrderPartComponent extends React.Component<AddOrderProps, AddOrderPartS
 
     onAdd() {
         var part = this.customer.parts.find(p => p.id == this.state.selectedPart) as Part;
-        this.props.onAddOrderPart(part.id);
+        this.props.onAddOrderPart(part.id, this.state.count);
     }
 
     render() {
@@ -53,15 +55,43 @@ class AddOrderPartComponent extends React.Component<AddOrderProps, AddOrderPartS
             <div>
                 {this.props.isLoading ? <p> Loading... </p> :
                     <div>
-                        <div>
-                            <select value={this.state.selectedPart} onChange={(x) => this.setState({ selectedPart: +x.target.value })}>
-                                {this.customer.parts.map((p, idx) =>
-                                    <option key={idx} value={idx}>{p.name}</option>
-                                )}
-                            </select>
+                        <legend> Добавить модель </legend>
+                        <div className="form-group row">
+                            <label htmlFor="addOrderPart-partSelect" className="col-sm-3 col-form-label">
+                                Модель
+                            </label>
+                            <div className="col-sm-9">
+                                <select
+                                    className="form-control"
+                                    id="addOrderPart-partSelect"
+                                    value={this.state.selectedPart}
+                                    onChange={(x) => this.setState({ selectedPart: +x.target.value })}>
+                                    {this.customer.parts.map((p, idx) =>
+                                        <option key={p.id} value={p.id}>{p.name}</option>
+                                    )}
+                                </select>
+                            </div>
                         </div>
-                        <div>
-                            <button onClick={() => this.onAdd()}> Добавить </button>
+                        <div className="form-group row">
+                            <label htmlFor="addOrderPart-count" className="col-sm-3 col-form-label">
+                                Количество
+                            </label>
+                            <div className="col-sm-9">
+                                <input type="number"
+                                    className="form-control"
+                                    id="addOrderPart-count"
+                                    min={1}
+                                    value={this.state.count}
+                                    onChange={x => this.setState({ count: +x.target.value })}
+                                ></input>
+                            </div>
+                        </div>
+                        <div className="form-group row">
+                            <div className="col-sm-12">
+                                <button
+                                    className="btn btn-success"
+                                    onClick={() => this.onAdd()}> Добавить </button>
+                            </div>
                         </div>
                     </div>
                 }
