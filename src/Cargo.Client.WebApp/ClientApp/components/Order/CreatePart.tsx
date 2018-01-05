@@ -9,7 +9,7 @@ interface CreatePartComponentOwnProps {
 }
 
 interface CreatePartComponentState {
-
+    name: string;
 }
 
 type CreatePartComponentProps = typeof CustomerStore.actionCreators
@@ -18,6 +18,9 @@ type CreatePartComponentProps = typeof CustomerStore.actionCreators
 class CreatePartComponent extends React.Component<CreatePartComponentProps, CreatePartComponentState>{
     constructor(p: CreatePartComponentProps) {
         super(p);
+        this.state = {
+            name: ""
+        };
     }
     fileChooser: HTMLFormElement;
 
@@ -46,6 +49,14 @@ class CreatePartComponent extends React.Component<CreatePartComponentProps, Crea
                     <div className="form-group row">
                         <input
                             className="form-control"
+                            placeholder="Название, опционально"
+                            value={this.state.name}
+                            onChange={(e) => this.setState({ name: e.target.value })}
+                        />
+                    </div>
+                    <div className="form-group row">
+                        <input
+                            className="form-control"
                             type="file" name="file"
                             accept=".stl"
                             defaultValue="Pick model file"
@@ -54,7 +65,7 @@ class CreatePartComponent extends React.Component<CreatePartComponentProps, Crea
                     <div className="form-group row">
                         <input
                             className="btn btn-success"
-                            type="button" value="upload" onClick={() => this.uploadFile()}></input>
+                            type="button" value="Создать" onClick={() => this.uploadFile()}></input>
                     </div>
                 </form>
             </div>

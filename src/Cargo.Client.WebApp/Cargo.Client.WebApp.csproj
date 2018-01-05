@@ -35,6 +35,8 @@
 
   <ItemGroup>
     <None Remove="ClientApp\components\Magics.tsx" />
+    <None Remove="ClientApp\components\Magics\LoadPartButton.tsx" />
+    <None Remove="ClientApp\components\Magics\NewBatch.tsx" />
     <None Remove="ClientApp\components\Order.tsx" />
     <None Remove="ClientApp\components\Order\addOrderPart.tsx" />
     <None Remove="ClientApp\components\Order\CreatePart.tsx" />
@@ -46,12 +48,15 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Cargo.Client.Logic\Cargo.Client.Logic.csproj" />
     <ProjectReference Include="..\Cargo.Client.MagicsProxy\Cargo.Client.MagicsProxy.csproj" />
     <ProjectReference Include="..\Cargo.Client.Persisting\Cargo.Client.Persisting.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <TypeScriptCompile Include="ClientApp\components\Magics.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\Magics\LoadPartButton.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\Magics\Magics.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\Batch\NewBatch.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Order\AddOrderPart.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Order\CreatePart.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Order\index.tsx" />

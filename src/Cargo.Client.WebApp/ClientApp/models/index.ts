@@ -8,6 +8,7 @@ export interface Customer {
 export interface OrderPart {
     id: number;
     part: Part;
+    order: Order;
 }
 
 export interface Part {

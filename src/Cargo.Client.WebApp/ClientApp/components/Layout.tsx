@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { NavMenu } from './NavMenu';
-import { Magics } from "./Magics";
+import { Magics } from "./Magics/Magics";
 import { ApplicationState } from '../store';
 
 
@@ -12,11 +12,12 @@ export class Layout extends React.Component<{}, {}> {
                     <NavMenu />
                 </div>
                 <div className='col-sm-9'>
-                    <div className='col-sm-9'>
-                        {// <Magics /> 
-                        }
+                    <div className='row'>
+                        <Magics />
                     </div>
-                    {this.props.children}
+                    <div className='row'>
+                        {this.props.children}
+                    </div>
                 </div>
             </div>
         </div>;

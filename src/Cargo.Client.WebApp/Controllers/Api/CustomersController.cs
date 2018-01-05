@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Cargo.Client.Logic;
 using Cargo.Client.Persisting;
 using Cargo.Client.Persisting.Entities;
 using Microsoft.AspNetCore.Http;
@@ -42,8 +43,7 @@ namespace Cargo.Client.WebApp.Controllers.Api
             if (cust == null)
                 return BadRequest("no such customer");
 
-            var path = Path.Combine(
-                        Directory.GetCurrentDirectory(), "wwwroot/upload", custId.ToString());
+            var path = PathBuilder.GetPartDirectory(cust);
             Directory.CreateDirectory(path);
 
             var part = new Part { Name = file.FileName };

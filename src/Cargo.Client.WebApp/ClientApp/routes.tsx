@@ -5,10 +5,12 @@ import Home from './components/Home';
 import FetchData from './components/FetchData';
 import Counter from './components/Counter';
 import Order from './components/Order';
+import { NewBatch } from './components/Batch/NewBatch';
 
 export const routes = <Layout>
     <Route exact path='/' component={ Home } />
     <Route path='/counter' component={ Counter } />
     <Route path='/fetchdata/:startDateIndex?' component={FetchData} />
     <Route path='/orders/:id' component={Order} />
+    <Route path='/batches/new' component={NewBatch}/>
 </Layout>;

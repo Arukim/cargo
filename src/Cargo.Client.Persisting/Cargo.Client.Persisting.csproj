@@ -113,6 +113,10 @@
     <Compile Include="Migrations\20180104173429_Part.Filename.designer.cs">
       <DependentUpon>20180104173429_Part.Filename.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\20180105192729_Batch.Filename.cs" />
+    <Compile Include="Migrations\20180105192729_Batch.Filename.designer.cs">
+      <DependentUpon>20180105192729_Batch.Filename.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\CargoContextModelSnapshot.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

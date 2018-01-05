@@ -1,8 +1,8 @@
 ﻿import * as React from 'react';
-import { RouteComponentProps } from 'react-router-dom';
+import { RouteComponentProps, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { ApplicationState } from '../store';
-import * as MagicsStore from '../store/Magics';
+import { ApplicationState } from '../../store';
+import * as MagicsStore from '../../store/Magics';
 
 // At runtime, Redux will merge together...
 type MagicsProps =
@@ -39,26 +39,36 @@ class MagicsComponent extends React.Component<MagicsProps, {}> {
                 break;
         }
 
-        return (<div className={this.props.appCount == 1 ? "" : "error"} >
-            {status}
-        </div>);
+        return status;
     }
 
     public render() {
-        return <div>
-            {this.renderState()}
-            <div>
-                Моделей загружено: {this.props.status.modelsCount}
+        return (
+            <div style={{ marginTop: "10px" }}>
+                <div className="form-inline">
+                    <b> Статус: </b>
+                    <label className={"form-control " + (this.props.appCount == 1 ? "label-success" : "label-warning")}>
+                        {this.renderState()}
+                    </label>
+                    <label className="form-control label-info">
+                        Моделей загружено: {this.props.status.modelsCount}
+                    </label>
+                    <label className="form-control label-info">
+                        Текущий объём: {this.props.status.modelsVolume} мм2
+                </label>
+                </div>
+                <div className="form-inline">
+                    
+                    <button
+                        className="btn btn-primary"
+                        disabled={!this.props.isAvailable}
+                        onClick={() => this.props.requestStatus()} > Обновить </button>
+                    <Link className="btn btn-success" to={`/batches/new`} > 
+                        Завершить
+                    </Link>
+                </div>
             </div>
-            <div>
-                Текущий объём: {this.props.status.modelsVolume} мм2
-            </div>
-            {
-                !this.props.isConnected ?
-                    <button onClick={() => this.props.requestStatus()} > Подключиться </button>
-                : null
-            }
-        </div>;
+        );
     }
 }
 

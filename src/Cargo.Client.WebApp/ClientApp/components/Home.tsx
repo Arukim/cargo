@@ -34,7 +34,7 @@ class Home extends React.Component<OrdersProps, {}> {
                         <td>{order.customer.name}</td>
                         <td>{order.name}</td>
                         <td>
-                            <Link to={`/orders/${order.id}`} > Изменить </Link>
+                            <Link className="btn btn-default" to={`/orders/${order.id}`} > Изменить </Link>
                         </td>
                     </tr>
                 )}

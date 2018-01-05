@@ -8,6 +8,8 @@ import * as OrderStore from '../../store/Order';
 import { AddOrderPart } from './AddOrderPart';
 import { CreatePart } from './CreatePart';
 
+import { LoadPartButton } from '../Magics/LoadPartButton';
+
 // At runtime, Redux will merge together...
 type OrdersProps =
     OrderStore.OrderState        // ... state we've requested from the Redux store
@@ -68,7 +70,8 @@ class OrderComponent extends React.Component<OrdersProps, {}> {
                         <td>{op.id}</td>
                         <td>{op.part.name}</td>
                         <td>
-                            <div>
+                            <div className="btn-group">
+                                <LoadPartButton orderPartId={op.id} />
                                 <button className="btn btn-warning"
                                     onClick={() => this.props.removeOrderParts(this.order.id, [op.id])}>
                                     Удалить

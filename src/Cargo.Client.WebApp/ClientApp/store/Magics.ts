@@ -7,10 +7,11 @@ import { MagicsStatus } from 'ClientApp/models';
 // STATE - This defines the type of data maintained in the Redux store.
 
 export interface MagicsState {
+    isAvailable: boolean;
     isLoading: boolean;
-    isConnected: boolean;
     appCount: number;
     status: MagicsStatus;
+    loadedOrderParts: number[];
 }
 
 
@@ -34,8 +35,32 @@ interface ReceiveMagicsStatus {
     status: MagicsStatus;
 }
 
+interface LoadedOrderPart {
+    type: "LOADED_ORDERPART";
+    id: number;
+    status: MagicsStatus;
+}
+
+interface UnloadedOrderPart {
+    type: "UNLOADED_ORDERPART";
+    id: number;
+    status: MagicsStatus;
+}
+
+interface RequestSaveBatch {
+    type: "REQUEST_SAVEBATCH";
+}
+
+interface ResponseSaveBatch {
+    type: "RESPONSE_SAVEBATCH";
+    status: MagicsStatus;
+}
+
+
 type KnownAction = RequestMagicsStatus | ReceiveMagicsStatus
-    | RequestAppCount | ReceiveAppCount;
+    | RequestAppCount | ReceiveAppCount
+    | LoadedOrderPart | UnloadedOrderPart;
+    //| RequestSaveBatch | ResponseSaveBatch;
 
 
 export const actionCreators = {
@@ -58,48 +83,77 @@ export const actionCreators = {
             });
         addTask(fetchTask);
         dispatch({ type: 'REQUEST_APP_COUNT' });
-    }
+    },
+    LoadOrderPart: (id: number): AppThunkAction<KnownAction> => (dispatch, getState) => {
+        let fetchTask = fetch(`api/Magics/Load/${id}`, {
+            method: "POST"
+        }).then(resp => resp.json() as Promise<MagicsStatus>)
+            .then(data => dispatch({ type: 'LOADED_ORDERPART', id: id, status: data }));
+        addTask(fetchTask);
+    },
+    UnloadOrderPart: (id: number): AppThunkAction<KnownAction> => (dispatch, getState) => {
+        let fetchTask = fetch(`api/Magics/Unload/${id}`, {
+            method: "POST"
+        }).then(resp => resp.json() as Promise<MagicsStatus>)
+            .then(data => dispatch({ type: 'UNLOADED_ORDERPART', id: id, status: data }));
+        addTask(fetchTask);
+    },
 };
 
 const unloadedState: MagicsState = {
     appCount: 0,
-    isConnected: false,
+    isLoading: false,
+    isAvailable: false,
     status: {
         modelsCount: 0,
         modelsVolume: 0
-    }, isLoading: false
+    },
+    loadedOrderParts: []
 };
+
+function getAvailability(count: number): boolean {
+    return count == 1;
+}
 
 export const reducer: Reducer<MagicsState> = (state: MagicsState, incomingAction: Action) => {
     const action = incomingAction as KnownAction;
     switch (action.type) {
         case 'REQUEST_STATUS':
             return {
-                status: state.status,
-                appCount: state.appCount,
+                ...state,
                 isLoading: true,
-                isConnected: state.isConnected
+                isAvailable: false
             };
         case 'RECEIVE_STATUS':
             return {
+                ...state,
                 status: action.status,
-                appCount: state.appCount,
                 isLoading: false,
-                isConnected: state.isConnected
             };
         case 'REQUEST_APP_COUNT':
             return {
-                status: state.status,
-                appCount: state.appCount,
+                ...state,
+                isAvailable: getAvailability(state.appCount),
                 isLoading: false,
-                isConnected: state.isConnected
             };
         case 'RECEIVE_APP_COUNT':
             return {
-                status: state.status,
+                ...state,
                 appCount: action.appCount,
+                isAvailable: getAvailability(action.appCount),
                 isLoading: false,
-                isConnected: state.isConnected
+            };
+        case 'LOADED_ORDERPART':
+            return {
+                ...state,
+                status: action.status,
+                loadedOrderParts: [...state.loadedOrderParts, action.id]
+            };
+        case 'UNLOADED_ORDERPART':
+            return {
+                ...state,
+                status: action.status,
+                loadedOrderParts: state.loadedOrderParts.filter(x => x != action.id)
             };
         default:
             // The following line guarantees that every action in the KnownAction union has been covered by a case above

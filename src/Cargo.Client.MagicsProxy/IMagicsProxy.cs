@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Cargo.Client.Persisting.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,5 +11,8 @@ namespace Cargo.Client.MagicsProxy
     {
         int AppCount();
         MagicsStatus GetStatus();
+        MagicsStatus LoadPart(OrderPart part);
+        MagicsStatus UnloadPart(OrderPart part);
+        MagicsStatus Save(Batch batch);
     }
 }

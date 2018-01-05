@@ -11,5 +11,7 @@ namespace Cargo.Client.Persisting.Entities
         public int Id { get; set; }
 
         public virtual ICollection<OrderPart> OrderParts { get; set; }
+        public string Name { get; set; }
+        public string Filename { get; set; }
     }
 }
