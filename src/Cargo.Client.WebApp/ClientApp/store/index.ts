@@ -5,6 +5,7 @@ import * as Order from './Order';
 import * as Magics from './Magics';
 import * as Customer from './Customer';
 import * as OrderParts from './OrderParts';
+import * as Batch from './Batch';
 
 // The top-level state object
 export interface ApplicationState {
@@ -15,6 +16,7 @@ export interface ApplicationState {
     magics: Magics.MagicsState;
     customer: Customer.CustomerState;
     orderParts: OrderParts.OrderPartsState;
+    batch: Batch.BatchState;
 }
 
 // Whenever an action is dispatched, Redux will update each top-level application state property using
@@ -28,6 +30,7 @@ export const reducers = {
     magics: Magics.reducer,
     customer: Customer.reducer,
     orderParts: OrderParts.reducer,
+    batch: Batch.reducer
 };
 
 // This type can be used as a hint on action creators so that its 'dispatch' and 'getState' params are

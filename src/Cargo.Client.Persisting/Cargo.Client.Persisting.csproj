@@ -101,6 +101,7 @@
   <ItemGroup>
     <Compile Include="CargoContext.cs" />
     <Compile Include="Entities\Batch.cs" />
+    <Compile Include="Entities\BatchOrderPart.cs" />
     <Compile Include="Entities\Customer.cs" />
     <Compile Include="Entities\Order.cs" />
     <Compile Include="Entities\OrderPart.cs" />
@@ -116,6 +117,14 @@
     <Compile Include="Migrations\20180105192729_Batch.Filename.cs" />
     <Compile Include="Migrations\20180105192729_Batch.Filename.designer.cs">
       <DependentUpon>20180105192729_Batch.Filename.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\20180106085117_BatchOrderPart.cs" />
+    <Compile Include="Migrations\20180106085117_BatchOrderPart.designer.cs">
+      <DependentUpon>20180106085117_BatchOrderPart.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\20180106091821_OrderPart.SuccessfulBatch.cs" />
+    <Compile Include="Migrations\20180106091821_OrderPart.SuccessfulBatch.designer.cs">
+      <DependentUpon>20180106091821_OrderPart.SuccessfulBatch.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\CargoContextModelSnapshot.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

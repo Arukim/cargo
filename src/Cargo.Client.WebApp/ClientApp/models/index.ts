@@ -27,3 +27,14 @@ export interface MagicsStatus {
     modelsCount: number;
     modelsVolume: number;
 }
+
+export interface Batch {
+    id: number;
+    name: string;
+    orderParts: OrderPart[];
+}
+
+export interface NewBatch {
+    name: string;
+    orderPartIds: number[]
+}

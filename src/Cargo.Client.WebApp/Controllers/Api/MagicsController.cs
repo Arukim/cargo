@@ -64,31 +64,5 @@ namespace Cargo.Client.WebApp.Controllers.Api
 
             return Ok(magics.UnloadPart(op));
         }
-
-        [HttpPost("[action]")]
-        public async Task<IActionResult> Save(SaveMagicsProject req)
-        {
-            var ops = ctx.OrderParts.Where(x => req.OrderParts.Contains(x.Id)).ToList();
-
-            var batch = new Batch
-            {
-                OrderParts = ops,
-                Name = req.Name
-            };
-
-            await ctx.SaveChangesAsync();
-
-            batch.Filename = PathBuilder.CreateBatchFilename(batch);
-
-            await ctx.SaveChangesAsync();
-
-            return Ok(magics.Save(batch));
-        }
-    }
-
-    public class SaveMagicsProject
-    {
-        public List<int> OrderParts { get; set; }
-        public string Name { get; set; }
     }
 }

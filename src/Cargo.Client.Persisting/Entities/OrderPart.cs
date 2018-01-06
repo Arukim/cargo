@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace Cargo.Client.Persisting.Entities
 {
@@ -14,7 +10,10 @@ namespace Cargo.Client.Persisting.Entities
         public virtual Part Part { get; set; }
         public int OrderId { get; set; }
         public virtual Order Order { get; set; }
-        public int? BatchId { get; set; }
-        public virtual Batch Batch { get; set; }
+
+        public virtual ICollection<BatchOrderPart> BatchOrderParts { get; set; }
+        
+        public int? SuccessfulBatchId { get; set; }
+        public virtual Batch SuccessfulBatch { get; set; }
     }
 }

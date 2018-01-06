@@ -64,7 +64,7 @@ class MagicsComponent extends React.Component<MagicsProps, {}> {
                         disabled={!this.props.isAvailable}
                         onClick={() => this.props.requestStatus()} > Обновить </button>
                     <Link className="btn btn-success" to={`/batches/new`} > 
-                        Завершить
+                        Создать партию
                     </Link>
                 </div>
             </div>

@@ -15,5 +15,7 @@ namespace Cargo.Client.Persisting
         public DbSet<OrderPart> OrderParts { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<Batch> Batches { get; set; }
+        public DbSet<BatchOrderPart> BatchOrderParts { get; set; }
     }
 }
+ 

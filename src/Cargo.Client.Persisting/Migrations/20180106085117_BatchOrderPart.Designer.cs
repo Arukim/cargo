@@ -11,9 +11,10 @@ using System;
 namespace Cargo.Client.Persisting.Migrations
 {
     [DbContext(typeof(CargoContext))]
-    partial class CargoContextModelSnapshot : ModelSnapshot
+    [Migration("20180106085117_BatchOrderPart")]
+    partial class BatchOrderPart
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -89,15 +90,11 @@ namespace Cargo.Client.Persisting.Migrations
 
                     b.Property<int>("PartId");
 
-                    b.Property<int?>("SuccessfulBatchId");
-
                     b.HasKey("Id");
 
                     b.HasIndex("OrderId");
 
                     b.HasIndex("PartId");
-
-                    b.HasIndex("SuccessfulBatchId");
 
                     b.ToTable("OrderParts");
                 });
@@ -152,10 +149,6 @@ namespace Cargo.Client.Persisting.Migrations
                         .WithMany("OrderParts")
                         .HasForeignKey("PartId")
                         .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("Cargo.Client.Persisting.Entities.Batch", "SuccessfulBatch")
-                        .WithMany()
-                        .HasForeignKey("SuccessfulBatchId");
                 });
 
             modelBuilder.Entity("Cargo.Client.Persisting.Entities.Part", b =>

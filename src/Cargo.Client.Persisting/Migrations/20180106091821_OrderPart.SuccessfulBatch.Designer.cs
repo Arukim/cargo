@@ -11,9 +11,10 @@ using System;
 namespace Cargo.Client.Persisting.Migrations
 {
     [DbContext(typeof(CargoContext))]
-    partial class CargoContextModelSnapshot : ModelSnapshot
+    [Migration("20180106091821_OrderPart.SuccessfulBatch")]
+    partial class OrderPartSuccessfulBatch
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

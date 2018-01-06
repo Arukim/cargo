@@ -4,17 +4,19 @@ import { connect } from 'react-redux';
 import { ApplicationState } from 'ClientApp/store';
 import * as MagicsStore from '../../store/Magics';
 import * as OrderPartsStore from '../../store/OrderParts';
+import * as BatchStore from '../../store/Batch';
 
 interface StoreProps {
     magics: MagicsStore.MagicsState;
     orderParts: OrderPartsStore.OrderPartsState;
+    batch: BatchStore.BatchState;
 }
 
 
 type NewBatchProps =
     StoreProps // ... state we've requested from the Redux store
-    & typeof MagicsStore.actionCreators // ... plus action creators we've requested
     & typeof OrderPartsStore.actionCreators
+    & typeof BatchStore.actionCreators
     & RouteComponentProps<{}>;
 
 interface NewBatchState {
@@ -22,6 +24,7 @@ interface NewBatchState {
 }
 
 class NewBatchComponent extends React.Component<NewBatchProps, NewBatchState>{
+    private isInited: boolean;
 
     constructor(p: NewBatchProps) {
         super(p);
@@ -31,13 +34,30 @@ class NewBatchComponent extends React.Component<NewBatchProps, NewBatchState>{
     }
 
     componentWillMount() {
+        this.isInited = true;
+        this.props.startNewBatch();
         this.props.requestOrderParts(this.props.magics.loadedOrderParts);
+    }
+
+    componentWillReceiveProps(nextProps: NewBatchProps) {
+        if (this.isInited && nextProps.batch.newBatchId != null) {
+            this.props.history.push(`/batches/${nextProps.batch.newBatchId}`);
+        }
+    }
+
+    onSave() {
+        var newBatch = {
+            name: this.state.name,
+            orderPartIds: this.props.magics.loadedOrderParts
+        };
+
+        this.props.createBatch(newBatch);
     }
 
     public render() {
         return (
             <div className="row">
-                <h1> Новый проект </h1>
+                <h1> Новая партия </h1>
                 <div className="col-lg-4">
                     <div className="form-group row">
                         <div className="col-lg-9">
@@ -51,7 +71,7 @@ class NewBatchComponent extends React.Component<NewBatchProps, NewBatchState>{
                         </div>
                     </div>
                     <div className="form-group row">
-                        <button className="btn btn-success">Сохранить</button>
+                        <button className="btn btn-success" onClick={() => this.onSave()} > Сохранить</button>
                     </div>
                 </div>
                 <div className="col-lg-12">
@@ -91,7 +111,7 @@ class NewBatchComponent extends React.Component<NewBatchProps, NewBatchState>{
 
 export const NewBatch = connect(
     (state: ApplicationState) => ({
-        magics: state.magics, orderParts: state.orderParts
+        magics: state.magics, orderParts: state.orderParts, batch: state.batch
     }),
-    { ...MagicsStore.actionCreators, ...OrderPartsStore.actionCreators }
+    { ...BatchStore.actionCreators, ...OrderPartsStore.actionCreators }
 )(NewBatchComponent) as typeof NewBatchComponent;

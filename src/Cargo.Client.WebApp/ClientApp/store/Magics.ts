@@ -47,20 +47,10 @@ interface UnloadedOrderPart {
     status: MagicsStatus;
 }
 
-interface RequestSaveBatch {
-    type: "REQUEST_SAVEBATCH";
-}
-
-interface ResponseSaveBatch {
-    type: "RESPONSE_SAVEBATCH";
-    status: MagicsStatus;
-}
-
 
 type KnownAction = RequestMagicsStatus | ReceiveMagicsStatus
     | RequestAppCount | ReceiveAppCount
     | LoadedOrderPart | UnloadedOrderPart;
-    //| RequestSaveBatch | ResponseSaveBatch;
 
 
 export const actionCreators = {
