@@ -26,6 +26,7 @@ export interface Order {
 export interface MagicsStatus {
     modelsCount: number;
     modelsVolume: number;
+    orderParts: number[];
 }
 
 export interface Batch {

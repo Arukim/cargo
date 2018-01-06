@@ -2,6 +2,7 @@
 using Cargo.Client.Persisting.Entities;
 using Magics;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
@@ -100,10 +101,26 @@ namespace Cargo.Client.MagicsProxy
             var volume = Double.Parse(vol, CultureInfo.InvariantCulture.NumberFormat);
             var numOfStl = Int32.Parse(magics.GetPlatformProperty("NumOfStl"));
 
+            var partList = new List<int> { };
+            for (int i = 0; i < numOfStl; i++)
+            {
+                var name = magics.GetModelProperty(i, "StlName");
+                var parts = name.Split('_');
+                if(parts.Length > 1)
+                {
+                    var res = 0;
+                    if(Int32.TryParse(parts[0], out res))
+                    {
+                        partList.Add(res);
+                    }
+                }
+            }
+
             return new MagicsStatus
             {
                 ModelsCount = numOfStl,
-                ModelsVolume = volume
+                ModelsVolume = volume,
+                OrderParts = partList   
             };
         }
     }

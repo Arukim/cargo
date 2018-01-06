@@ -96,7 +96,8 @@ const unloadedState: MagicsState = {
     isAvailable: false,
     status: {
         modelsCount: 0,
-        modelsVolume: 0
+        modelsVolume: 0,
+        orderParts: []
     },
     loadedOrderParts: []
 };
@@ -118,6 +119,7 @@ export const reducer: Reducer<MagicsState> = (state: MagicsState, incomingAction
             return {
                 ...state,
                 status: action.status,
+                loadedOrderParts: action.status.orderParts,
                 isLoading: false,
             };
         case 'REQUEST_APP_COUNT':
@@ -137,13 +139,13 @@ export const reducer: Reducer<MagicsState> = (state: MagicsState, incomingAction
             return {
                 ...state,
                 status: action.status,
-                loadedOrderParts: [...state.loadedOrderParts, action.id]
+                loadedOrderParts: action.status.orderParts
             };
         case 'UNLOADED_ORDERPART':
             return {
                 ...state,
                 status: action.status,
-                loadedOrderParts: state.loadedOrderParts.filter(x => x != action.id)
+                loadedOrderParts: action.status.orderParts
             };
         default:
             // The following line guarantees that every action in the KnownAction union has been covered by a case above
