@@ -21,6 +21,7 @@ type NewBatchProps =
 
 interface NewBatchState {
     name: string;
+    filename: string;
 }
 
 class NewBatchComponent extends React.Component<NewBatchProps, NewBatchState>{
@@ -29,7 +30,8 @@ class NewBatchComponent extends React.Component<NewBatchProps, NewBatchState>{
     constructor(p: NewBatchProps) {
         super(p);
         this.state = {
-            name: ""
+            name: "",
+            filename: ""
         };
     }
 
@@ -48,10 +50,15 @@ class NewBatchComponent extends React.Component<NewBatchProps, NewBatchState>{
     onSave() {
         var newBatch = {
             name: this.state.name,
+            filename: this.state.filename,
             orderPartIds: this.props.magics.loadedOrderParts
         };
 
         this.props.createBatch(newBatch);
+    }
+
+    get canSave(): boolean {
+        return this.state.filename.length > 0;
     }
 
     public render() {
@@ -69,9 +76,22 @@ class NewBatchComponent extends React.Component<NewBatchProps, NewBatchState>{
                                 onChange={(x) => this.setState({ name: x.target.value })}>
                             </input>
                         </div>
+                        <div className="col-lg-9">
+                            <input
+                                className="form-control"
+                                type="file"
+                                name="file"
+                                accept=".magics"
+                                placeholder="Выберите файл модели"
+                                value={this.state.filename}
+                                onChange={e => this.setState({ filename: e.target.value })}
+                            ></input>
+                        </div>
                     </div>
                     <div className="form-group row">
-                        <button className="btn btn-success" onClick={() => this.onSave()} > Сохранить</button>
+                        <button className="btn btn-success"
+                            disabled={!this.canSave}
+                            onClick={() => this.onSave()} > Сохранить</button>
                     </div>
                 </div>
                 <div className="col-lg-12">

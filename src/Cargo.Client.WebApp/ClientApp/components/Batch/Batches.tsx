@@ -26,6 +26,9 @@ class BatchesComponent extends React.Component<BatchesProps, {}> {
                             Название
                             </th>
                         <th>
+                            Файл
+                            </th>
+                        <th>
                             Действия
                             </th>
                     </tr>
@@ -35,6 +38,7 @@ class BatchesComponent extends React.Component<BatchesProps, {}> {
                         <tr key={b.id}>
                             <td>{b.id}</td>
                             <td>{b.name}</td>
+                            <td>{b.filename}</td>
                             <td>
                                 <Link className="btn btn-default" to={`/batches/${b.id}`}> Изменить </Link>
                                 <button className="btn btn-warning" onClick={() => this.props.deleteBatch(b.id)} >

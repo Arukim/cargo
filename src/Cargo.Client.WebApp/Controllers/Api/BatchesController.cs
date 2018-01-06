@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Cargo.Client.Logic;
@@ -32,7 +33,8 @@ namespace Cargo.Client.WebApp.Controllers.Api
 
             var batch = new Batch
             {
-                Name = req.Name
+                Name = req.Name,
+                Filename = Path.GetFileName(req.Filename)
             };
 
             ctx.Batches.Add(batch);
@@ -44,11 +46,8 @@ namespace Cargo.Client.WebApp.Controllers.Api
                 OrderPartId = op.Id,
                 BatchId = batch.Id
             }).ToList());
-
-            batch.Filename = PathBuilder.CreateBatchFilename(batch);
-
+            
             await ctx.SaveChangesAsync();
-            magics.Save(batch);
             return Ok(batch.Id);
         }
 
@@ -104,6 +103,7 @@ namespace Cargo.Client.WebApp.Controllers.Api
     public class NewBatch
     {
         public string Name { get; set; }
+        public string Filename { get; set; }
         public List<int> OrderPartIds { get; set; }
     }
 }

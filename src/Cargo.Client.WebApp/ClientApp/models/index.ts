@@ -31,10 +31,12 @@ export interface MagicsStatus {
 export interface Batch {
     id: number;
     name: string;
+    filename: string;
     orderParts: OrderPart[];
 }
 
 export interface NewBatch {
     name: string;
+    filename: string;
     orderPartIds: number[]
 }

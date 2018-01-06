@@ -50,7 +50,10 @@ class EditBatchComponent extends React.Component<EditBatchProps, {}>{
             <div>
                 <h1> Редактирование партии {this.batchId} </h1>
                 {this.props.isLoading ? "Loading..." :
-                    this.renderOrderPartTable()
+                    <div>
+                        <label>{this.props.batch.filename}</label>
+                        {this.renderOrderPartTable()}
+                    </div>
                 }
             </div>
         );

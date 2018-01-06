@@ -80,7 +80,7 @@ namespace Cargo.Client.MagicsProxy
             try
             {
                 Directory.CreateDirectory(PathBuilder.GetBatchDirectory());
-                magics.SaveProject(PathBuilder.GetBatchFile(batch));
+                magics.SavePlatform(@"C:\temp\test.magics");
                 return ReadStatus(magics);
             }
             finally

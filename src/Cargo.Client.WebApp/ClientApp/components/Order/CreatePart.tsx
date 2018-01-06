@@ -59,7 +59,7 @@ class CreatePartComponent extends React.Component<CreatePartComponentProps, Crea
                             className="form-control"
                             type="file" name="file"
                             accept=".stl"
-                            defaultValue="Pick model file"
+                            placeholder="Выберите файл модели"
                         ></input>
                     </div>
                     <div className="form-group row">
