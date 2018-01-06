@@ -5,10 +5,19 @@ export interface Customer {
     parts: Part[];
 }
 
+export interface BatchOrderPart {
+    id: number;
+    batchId: number;
+    orderPartId: number;
+}
+
+
 export interface OrderPart {
     id: number;
     part: Part;
     order: Order;
+    successfulBatchId: number;
+    batchOrderParts: BatchOrderPart[];
 }
 
 export interface Part {

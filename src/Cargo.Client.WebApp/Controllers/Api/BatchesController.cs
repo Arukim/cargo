@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using Cargo.Client.Logic;
 using Cargo.Client.MagicsProxy;
 using Cargo.Client.Persisting;
 using Cargo.Client.Persisting.Entities;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -77,8 +74,8 @@ namespace Cargo.Client.WebApp.Controllers.Api
         {
             var batch = await ctx.Batches
                 .Include(x => x.BatchOrderParts)
-                .ThenInclude(x => x.OrderPart)
-                .ThenInclude(x => x.Part)
+                    .ThenInclude(x => x.OrderPart)
+                    .ThenInclude(x => x.Part)
                 .FirstOrDefaultAsync(x => x.Id == id);
             if (batch == null)
                 return BadRequest("no such batch");

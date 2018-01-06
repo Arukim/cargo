@@ -61,6 +61,8 @@ class OrderComponent extends React.Component<OrdersProps, {}> {
                 <tr>
                     <th>Id</th>
                     <th>Название модели</th>
+                    <th>Партии </th>
+                    <th>Статус</th>
                     <th>Действия</th>
                 </tr>
             </thead>
@@ -69,6 +71,16 @@ class OrderComponent extends React.Component<OrdersProps, {}> {
                     <tr key={idx}>
                         <td>{op.id}</td>
                         <td>{op.part.name}</td>
+                        <td>{op.batchOrderParts
+                            .map(x => x.batchId)
+                            .map(x => <Link key={x} to={`/batches/${x}`}>{x + " "}</Link>)}</td>
+                        <td>
+                            {op.successfulBatchId == undefined ? "Не готово" :
+                                <Link to={`/batches/${op.successfulBatchId}`} className="btn btn-default" >
+                                    Готово в партии № {op.successfulBatchId}
+                                </Link>
+                            }
+                        </td>
                         <td>
                             <div className="btn-group">
                                 <LoadPartButton orderPartId={op.id} />

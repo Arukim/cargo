@@ -23,7 +23,10 @@ namespace Cargo.Client.WebApp.Controllers.Api
         public IQueryable<Order> Orders => ctx.Orders
             .Include(x => x.Customer)
             .Include(x => x.OrderParts)
-                .ThenInclude(op => op.Part);
+                .ThenInclude(op => op.Part)
+            .Include(x => x.OrderParts)
+                .ThenInclude(op => op.BatchOrderParts)
+            .OrderByDescending(x => x.Id);
 
         [HttpGet]
         public async Task<IEnumerable<Order>> GetAll()
