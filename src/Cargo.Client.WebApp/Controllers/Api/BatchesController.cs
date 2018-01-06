@@ -55,7 +55,22 @@ namespace Cargo.Client.WebApp.Controllers.Api
         [HttpGet()]
         public async Task<List<Batch>> GetBatches()
         {
-            return await ctx.Batches.ToListAsync();
+            return await ctx.Batches
+                .OrderByDescending(x => x.Id)
+                .ToListAsync();
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var batch = await ctx.Batches.FirstOrDefaultAsync(x => x.Id == id);
+            if (batch == null)
+                return BadRequest("no such batch");
+
+            ctx.Batches.Remove(batch);
+
+            await ctx.SaveChangesAsync();
+            return Ok();
         }
 
         [HttpGet("{id}")]

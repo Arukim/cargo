@@ -7,12 +7,14 @@ import Counter from './components/Counter';
 import Order from './components/Order';
 import { NewBatch } from './components/Batch/NewBatch';
 import { EditBatch } from './components/Batch/EditBatch';
+import { Batches } from './components/Batch/Batches';
 
 export const routes = <Layout>
     <Route exact path='/' component={Home} />
     <Route path='/counter' component={Counter} />
     <Route path='/fetchdata/:startDateIndex?' component={FetchData} />
     <Route path='/orders/:id' component={Order} />
+    <Route strict exact path='/batches' component={Batches} />
     <Route strict exact path='/batches/new' component={NewBatch} />
     <Route strict exact path='/batches/:id(\\d+)' component={EditBatch} />
 </Layout>;
