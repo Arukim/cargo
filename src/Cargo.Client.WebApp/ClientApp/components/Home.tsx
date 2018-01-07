@@ -45,7 +45,6 @@ class Home extends React.Component<OrdersProps, {}> {
     public render() {
         return <div>
             <h1>Cargo</h1>
-            <p>Добро пожаловать в систему управления 3d-печатью</p>
             {this.renderOrderTable()}
         </div>;
     }

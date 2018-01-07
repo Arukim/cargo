@@ -12,7 +12,7 @@ export class NavMenu extends React.Component<{}, {}> {
                         <span className='icon-bar'></span>
                         <span className='icon-bar'></span>
                     </button>
-                    <Link className='navbar-brand' to={ '/' }>Карго - Управление печатью</Link>
+                    <Link className='navbar-brand' to={ '/' }>Cargo</Link>
                 </div>
                 <div className='clearfix'></div>
                 <div className='navbar-collapse collapse'>
@@ -20,6 +20,11 @@ export class NavMenu extends React.Component<{}, {}> {
                         <li>
                             <NavLink exact to={ '/' } activeClassName='active'>
                                 <span className='glyphicon glyphicon-home'></span> Главная
+                            </NavLink>
+                        </li>
+                        <li>
+                            <NavLink to={'/customers'} activeClassName='active'>
+                                <span className='glyphicon glyphicon-user'></span> Заказчики
                             </NavLink>
                         </li>
                         <li>

@@ -22,6 +22,15 @@ namespace Cargo.Client.WebApp.Controllers.Api
             this.ctx = ctx;
         }
 
+        [HttpGet()]
+        public async Task<List<Customer>> Get()
+        {
+            return await ctx.Customers
+                .OrderBy(x => x.Name)
+                .ToListAsync();
+        }
+
+
         [HttpGet("{id}")]
         public async Task<Customer> Get(int id)
         {

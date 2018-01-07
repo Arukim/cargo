@@ -12,10 +12,10 @@ export class Layout extends React.Component<{}, {}> {
                     <NavMenu />
                 </div>
                 <div className='col-sm-9'>
-                    <div className='row'>
+                    <div className=''>
                         <Magics />
                     </div>
-                    <div className='row'>
+                    <div className=''>
                         {this.props.children}
                     </div>
                 </div>

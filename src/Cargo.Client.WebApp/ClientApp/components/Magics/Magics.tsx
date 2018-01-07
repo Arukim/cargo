@@ -55,18 +55,18 @@ class MagicsComponent extends React.Component<MagicsProps, {}> {
                     </label>
                     <label className="form-control label-info">
                         Текущий объём: {this.props.status.modelsVolume} мм2
-                </label>
-                </div>
-                <div className="form-inline">
-                    
+                    </label>
+
+                    <b> Действия: </b>
                     <button
                         className="btn btn-primary"
                         disabled={!this.props.isAvailable}
                         onClick={() => this.props.requestStatus()} > Обновить </button>
-                    <Link className="btn btn-success" to={`/batches/new`} > 
+                    <Link className="btn btn-success" to={`/batches/new`} >
                         Создать партию
                     </Link>
                 </div>
+                <hr/>
             </div>
         );
     }

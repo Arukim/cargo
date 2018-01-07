@@ -4,6 +4,7 @@ import * as Orders from './Orders';
 import * as Order from './Order';
 import * as Magics from './Magics';
 import * as Customer from './Customer';
+import * as Customers from './Customers';
 import * as OrderParts from './OrderParts';
 import * as Batch from './Batch';
 import * as Batches from './Batches';
@@ -16,6 +17,7 @@ export interface ApplicationState {
     order: Order.OrderState;
     magics: Magics.MagicsState;
     customer: Customer.CustomerState;
+    customers: Customers.CustomersState;
     orderParts: OrderParts.OrderPartsState;
     batch: Batch.BatchState;
     batches: Batches.BatchesState;
@@ -31,6 +33,7 @@ export const reducers = {
     order: Order.reducer,
     magics: Magics.reducer,
     customer: Customer.reducer,
+    customers: Customers.reducer,
     orderParts: OrderParts.reducer,
     batch: Batch.reducer,
     batches: Batches.reducer

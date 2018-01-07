@@ -12,12 +12,12 @@ export interface CustomerState {
 
 // ACTIONS
 interface RequestCustomer {
-    type: 'REQUEST_CUSTOMER'
+    type: 'REQUEST_CUSTOMER';
 }
 
 interface ReceiveCustomer {
-    type: 'RECEIVE_CUSTOMER',
-    customer: Customer
+    type: 'RECEIVE_CUSTOMER';
+    customer: Customer;
 }
 
 type KnownAction = RequestCustomer | ReceiveCustomer;
@@ -26,9 +26,7 @@ export const actionCreators = {
     requestCustomer: (id: number): AppThunkAction<KnownAction> => (dispatch, getState) => {
         let fetchTask = fetch(`api/Customers/${id}`)
             .then(resp => resp.json() as Promise<Customer>)
-            .then(data => {
-                dispatch({ type: 'RECEIVE_CUSTOMER', customer: data });
-            });
+            .then(data => dispatch({ type: 'RECEIVE_CUSTOMER', customer: data }));
         addTask(fetchTask);
         dispatch({ type: 'REQUEST_CUSTOMER' });
     }
