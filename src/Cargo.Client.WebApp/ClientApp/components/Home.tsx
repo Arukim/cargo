@@ -30,11 +30,11 @@ class Home extends React.Component<OrdersProps, {}> {
             <tbody>
                 {this.props.orders.map(order =>
                     <tr key={order.id}>
-                        <td>{order.id}</td>
+                        <th scope="row">{order.id}</th>
                         <td>{order.customer.name}</td>
                         <td>{order.name}</td>
                         <td>
-                            <Link className="btn btn-default" to={`/orders/${order.id}`} > Изменить </Link>
+                            <Link className="btn btn-secondary" to={`/orders/${order.id}`} > Изменить </Link>
                         </td>
                     </tr>
                 )}
@@ -44,7 +44,7 @@ class Home extends React.Component<OrdersProps, {}> {
 
     public render() {
         return <div>
-            <h1>Cargo</h1>
+            <h1>Заказы</h1>
             {this.renderOrderTable()}
         </div>;
     }

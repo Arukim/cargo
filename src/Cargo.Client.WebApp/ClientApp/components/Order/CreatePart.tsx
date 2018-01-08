@@ -45,28 +45,41 @@ class CreatePartComponent extends React.Component<CreatePartComponentProps, Crea
         return (
             <div>
                 <legend> Создать модель </legend>
-                <form formEncType="multipart/forbm-data"
+                <form formEncType="multipart/form-data"
                     ref={(e) => this.fileChooser = e as HTMLFormElement}>
                     <div className="form-group row">
-                        <input
-                            className="form-control"
-                            placeholder="Название, опционально"
-                            value={this.state.name}
-                            onChange={(e) => this.setState({ name: e.target.value })}
-                        />
+                        <label htmlFor="createPart-name" className="col-sm-3 col-form-label">
+                            Название
+                            </label>
+                        <div className="col-sm-9">
+                            <input
+                                id="createPart-name"
+                                className="form-control"
+                                placeholder="Название, опционально"
+                                value={this.state.name}
+                                onChange={(e) => this.setState({ name: e.target.value })}
+                            />
+                        </div>
                     </div>
                     <div className="form-group row">
-                        <input
-                            className="form-control"
-                            type="file" name="file"
-                            accept=".stl"
-                            defaultValue="Pick model file"
-                        ></input>
+                        <label htmlFor="createPart-name" className="col-sm-3 col-form-label">
+                            Файл модели
+                            </label>
+                        <div className="col-sm-9">
+                            <input
+                                className="form-control"
+                                type="file" name="file"
+                                accept=".stl"
+                                defaultValue="Pick model file"
+                            ></input>
+                        </div>
                     </div>
                     <div className="form-group row">
-                        <input
-                            className="btn btn-success"
-                            type="button" value="Создать" onClick={() => this.uploadFile()}></input>
+                        <div className="col-sm-12">
+                            <input
+                                className="btn btn-success"
+                                type="button" value="Создать" onClick={() => this.uploadFile()}></input>
+                        </div>
                     </div>
                 </form>
             </div>

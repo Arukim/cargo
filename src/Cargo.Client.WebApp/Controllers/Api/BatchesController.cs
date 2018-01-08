@@ -45,6 +45,8 @@ namespace Cargo.Client.WebApp.Controllers.Api
             }).ToList());
             
             await ctx.SaveChangesAsync();
+
+            magics.Save(batch);
             return Ok(batch.Id);
         }
 

@@ -64,7 +64,7 @@ class NewBatchComponent extends React.Component<NewBatchProps, NewBatchState>{
     public render() {
         return (
             <div className="row">
-                <h1> Новая партия </h1>
+                <h1> Новая Job </h1>
                 <div className="col-lg-4">
                     <div className="form-group row">
                         <div className="col-lg-9">
@@ -103,7 +103,7 @@ class NewBatchComponent extends React.Component<NewBatchProps, NewBatchState>{
 
     public renderOrderPartsTable() {
         return (
-            <table className="table row">
+            <table className="table">
                 <thead>
                     <tr>
                         <th> № </th>
@@ -116,7 +116,7 @@ class NewBatchComponent extends React.Component<NewBatchProps, NewBatchState>{
                 <tbody>
                     {this.props.orderParts.orderParts.map((op, idx) =>
                         <tr key={op.id}>
-                            <td>{idx}</td>
+                            <th scope="row">{idx}</th>
                             <td>{op.id}</td>
                             <td>{op.order.name} </td>
                             <td>{op.order.customer.name} </td>

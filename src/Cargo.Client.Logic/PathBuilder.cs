@@ -22,7 +22,7 @@ namespace Cargo.Client.Logic
 
         public static string GetBatchDirectory()
         {
-            return Path.Combine(Directory.GetCurrentDirectory(), "wwwwroot\\upload", "batches");
+            return Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/upload", "batches");
         }
 
         public static string CreateBatchFilename(Batch batch)

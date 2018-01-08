@@ -5,6 +5,7 @@ import * as MagicsStore from '../../store/Magics';
 
 interface LoadPartButtonOwnProps {
     orderPartId: number;
+    className? : string;
 }
 
 
@@ -31,7 +32,7 @@ class LoadPartButtonComponent extends React.Component<LoadPartButtonProps, {}> {
     public render() {
         return (
             <button
-                className="btn btn-primary"
+                className={"btn btn-primary " + this.props.className}
                 disabled={!this.props.isAvailable}
                 onClick={() => this.onClick()}>
                 {!this.isLoaded ? "Загрузить" : "Убрать"}

@@ -22,7 +22,7 @@ class EditBatchComponent extends React.Component<EditBatchProps, {}>{
 
     renderOrderPartTable() {
         return (
-            <table className="table row">
+            <table className="table">
                 <thead>
                     <tr>
                         <th>
@@ -39,12 +39,12 @@ class EditBatchComponent extends React.Component<EditBatchProps, {}>{
                 <tbody>
                     {this.props.batch.orderParts.map((op, idx) =>
                         <tr key={op.id}>
-                            <td>{idx}</td>
+                            <th scope="row">{idx}</th>
                             <td>{op.id}</td>
                             <td>
                                 {op.successfulBatchId == undefined ?
                                     <button
-                                        className="btn btn-default"
+                                        className="btn btn-secondary"
                                         onClick={() => this.props.setSuccessfulBatch(op.id, this.batchId)}
                                     > Не готово </button> :
                                     <label>

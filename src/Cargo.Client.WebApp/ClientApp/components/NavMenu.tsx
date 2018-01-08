@@ -3,38 +3,34 @@ import { NavLink, Link } from 'react-router-dom';
 
 export class NavMenu extends React.Component<{}, {}> {
     public render() {
-        return <div className='main-nav'>
-                <div className='navbar navbar-inverse'>
+        return (
+            <div className='navbar navbar-toggleable-sm navbar-inverse bg-inverse'>
                 <div className='navbar-header'>
-                    <button type='button' className='navbar-toggle' data-toggle='collapse' data-target='.navbar-collapse'>
-                        <span className='sr-only'>Toggle navigation</span>
-                        <span className='icon-bar'></span>
-                        <span className='icon-bar'></span>
-                        <span className='icon-bar'></span>
+                    <button className="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                        <span className="navbar-toggler-icon"></span>
                     </button>
-                    <Link className='navbar-brand' to={ '/' }>Cargo</Link>
+                    <Link className='navbar-brand' to={'/'}>Cargo</Link>
                 </div>
-                <div className='clearfix'></div>
-                <div className='navbar-collapse collapse'>
-                    <ul className='nav navbar-nav'>
-                        <li>
-                            <NavLink exact to={ '/' } activeClassName='active'>
-                                <span className='glyphicon glyphicon-home'></span> Главная
+                <div className="collapse navbar-collapse" id="navbarNav">
+                    <ul className="navbar-nav">
+                        <li className="nav-item">
+                            <NavLink exact to={'/'} activeClassName='active' className="nav-link">
+                                <span className='glyphicon glyphicon-home'></span> Заказы
                             </NavLink>
                         </li>
-                        <li>
-                            <NavLink to={'/customers'} activeClassName='active'>
+                        <li className="nav-item">
+                            <NavLink to={'/customers'} activeClassName='active' className="nav-link">
                                 <span className='glyphicon glyphicon-user'></span> Заказчики
                             </NavLink>
                         </li>
-                        <li>
-                            <NavLink to={ '/batches' } activeClassName='active'>
-                                <span className='glyphicon glyphicon-th-list'></span> Партии
+                        <li className="nav-item">
+                            <NavLink to={'/batches'} activeClassName='active' className="nav-link">
+                                <span className='glyphicon glyphicon-th-list'></span> Jobs
                             </NavLink>
                         </li>
                     </ul>
                 </div>
             </div>
-        </div>;
+        );
     }
 }

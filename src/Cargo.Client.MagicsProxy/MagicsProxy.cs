@@ -81,7 +81,7 @@ namespace Cargo.Client.MagicsProxy
             try
             {
                 Directory.CreateDirectory(PathBuilder.GetBatchDirectory());
-                magics.SavePlatform(@"C:\temp\test.magics");
+                magics.SaveProject(@"C:\temp\test.magics");
                 return ReadStatus(magics);
             }
             finally

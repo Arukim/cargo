@@ -47,8 +47,7 @@ namespace Cargo.Client.WebApp.Controllers.Api
             if (count < 0)
                 return BadRequest($"count value of {count} is illegal");
 
-            var order = await ctx.Orders
-                .Include(x => x.OrderParts)
+            var order = await Orders
                 .FirstOrDefaultAsync(x => x.Id == orderId);
 
             if (order == null)
@@ -63,7 +62,8 @@ namespace Cargo.Client.WebApp.Controllers.Api
                 .Select(x => new OrderPart
                 {
                     Part = part,
-                    Order = order
+                    Order = order,
+                    BatchOrderParts = new List<BatchOrderPart> { }
                 }).ToList();
 
             ctx.OrderParts.AddRange(newOrderParts);

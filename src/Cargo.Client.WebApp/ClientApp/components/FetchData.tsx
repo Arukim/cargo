@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { ApplicationState }  from '../store';
+import { ApplicationState } from '../store';
 import * as WeatherForecastsState from '../store/WeatherForecasts';
 
 // At runtime, Redux will merge together...
@@ -27,8 +27,8 @@ class FetchData extends React.Component<WeatherForecastProps, {}> {
         return <div>
             <h1>Weather forecast</h1>
             <p>This component demonstrates fetching data from the server and working with URL parameters.</p>
-            { this.renderForecastsTable() }
-            { this.renderPagination() }
+            {this.renderForecastsTable()}
+            {this.renderPagination()}
         </div>;
     }
 
@@ -43,14 +43,14 @@ class FetchData extends React.Component<WeatherForecastProps, {}> {
                 </tr>
             </thead>
             <tbody>
-            {this.props.forecasts.map(forecast =>
-                <tr key={ forecast.dateFormatted }>
-                    <td>{ forecast.dateFormatted }</td>
-                    <td>{ forecast.temperatureC }</td>
-                    <td>{ forecast.temperatureF }</td>
-                    <td>{ forecast.summary }</td>
-                </tr>
-            )}
+                {this.props.forecasts.map(forecast =>
+                    <tr key={forecast.dateFormatted}>
+                        <th scope="row">{forecast.dateFormatted}</th>
+                        <td>{forecast.temperatureC}</td>
+                        <td>{forecast.temperatureF}</td>
+                        <td>{forecast.summary}</td>
+                    </tr>
+                )}
             </tbody>
         </table>;
     }
@@ -60,9 +60,9 @@ class FetchData extends React.Component<WeatherForecastProps, {}> {
         let nextStartDateIndex = (this.props.startDateIndex || 0) + 5;
 
         return <p className='clearfix text-center'>
-            <Link className='btn btn-default pull-left' to={ `/fetchdata/${ prevStartDateIndex }` }>Previous</Link>
-            <Link className='btn btn-default pull-right' to={ `/fetchdata/${ nextStartDateIndex }` }>Next</Link>
-            { this.props.isLoading ? <span>Loading...</span> : [] }
+            <Link className='btn btn-default pull-left' to={`/fetchdata/${prevStartDateIndex}`}>Previous</Link>
+            <Link className='btn btn-default pull-right' to={`/fetchdata/${nextStartDateIndex}`}>Next</Link>
+            {this.props.isLoading ? <span>Loading...</span> : []}
         </p>;
     }
 }

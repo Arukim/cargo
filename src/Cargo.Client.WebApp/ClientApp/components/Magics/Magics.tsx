@@ -44,30 +44,37 @@ class MagicsComponent extends React.Component<MagicsProps, {}> {
 
     public render() {
         return (
-            <div style={{ marginTop: "10px" }}>
-                <div className="form-inline">
-                    <b> Статус: </b>
-                    <label className={"form-control " + (this.props.appCount == 1 ? "label-success" : "label-warning")}>
-                        {this.renderState()}
-                    </label>
-                    <label className="form-control label-info">
-                        Моделей загружено: {this.props.status.modelsCount}
-                    </label>
-                    <label className="form-control label-info">
-                        Текущий объём: {this.props.status.modelsVolume} мм2
-                    </label>
-
-                    <b> Действия: </b>
-                    <button
-                        className="btn btn-primary"
-                        disabled={!this.props.isAvailable}
-                        onClick={() => this.props.requestStatus()} > Обновить </button>
-                    <Link className="btn btn-success" to={`/batches/new`} >
-                        Создать партию
+            <div className="container-fluid">
+                <div className="row justify-content-between">
+                    <div className="form-inline col mt-3">
+                        <div className="mr-2">
+                            <b> Статус: </b>
+                        </div>
+                        <label className={"form-control mx-1 " + (this.props.appCount == 1 ? "label-success" : "label-warning")}>
+                            {this.renderState()}
+                        </label>
+                        <label className="form-control mx-1 label-info">
+                            Моделей загружено: {this.props.status.modelsCount}
+                        </label>
+                        <label className="form-control mx-1 label-info">
+                            Текущий объём: {this.props.status.modelsVolume} мм2
+                        </label>
+                    </div>
+                    <div className="form-inline col-xl-4 align-self-end mt-3">
+                        <div className="mr-2">
+                            <b> Действия: </b>
+                        </div>
+                        <button
+                            className="btn btn-primary mx-1"
+                            disabled={!this.props.isAvailable}
+                            onClick={() => this.props.requestStatus()} > Обновить </button>
+                        <Link className="btn btn-success mx-1" to={`/batches/new`} >
+                            Создать партию
                     </Link>
-                </div>
-                <hr/>
-            </div>
+                    </div>
+                </div >
+                <hr />
+            </div >
         );
     }
 }

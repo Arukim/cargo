@@ -9,6 +9,7 @@ import { NewBatch } from './components/Batch/NewBatch';
 import { EditBatch } from './components/Batch/EditBatch';
 import { Batches } from './components/Batch/Batches';
 import { Customers } from './components/Customer/Customers';
+import { AddCustomer } from './components/Customer/AddCustomer';
 
 export const routes = <Layout>
     <Route exact path='/' component={Home} />
@@ -18,5 +19,6 @@ export const routes = <Layout>
     <Route strict exact path='/batches' component={Batches} />
     <Route strict exact path='/batches/new' component={NewBatch} />
     <Route strict exact path='/batches/:id(\\d+)' component={EditBatch} />
-    <Route strict exact path='/customers' component={Customers}/>
+    <Route strict exact path='/customers' component={Customers} />
+    <Route strict exact path='/customers/add' component={AddCustomer} />
 </Layout>;

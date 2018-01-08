@@ -28,27 +28,29 @@ class OrderComponent extends React.Component<OrdersProps, {}> {
 
     public render() {
         return (
-            <div className="row">
+            <div className="container-fluid">
                 {this.props.isLoading ? <p> Loading... </p> :
 
                     <div>
-                        <h1>Заказ {this.order.name}</h1>
+                        <h1>Заказ "{this.order.name}"</h1>
 
-                        <div className="col-xs-4">
-                            <AddOrderPart
-                                customerId={this.order.customer.id}
-                                onAddOrderPart={(partId, count) =>
-                                    this.props.addOrderPart(this.order.id, partId, count)}
-                            />
+                        <div className="row">
+                            <div className="col-xl-4 col-lg-6">
+                                <AddOrderPart
+                                    customerId={this.order.customer.id}
+                                    onAddOrderPart={(partId, count) =>
+                                        this.props.addOrderPart(this.order.id, partId, count)}
+                                />
+                            </div>
+                            <div className="col-xl-4 col-lg-6">
+                                <CreatePart
+                                    customerId={this.order.customer.id}
+                                />
+                            </div>
                         </div>
-                        <div className="col-xs-4">
-                            <CreatePart
-                                customerId={this.order.customer.id}
-                            />
-                        </div>
-                        <div className="col-lg-12">
+                        <div className="col-md-12">
                             {this.renderOrderParts()}
-                        </div>
+                        </div>  
                     </div>
                 }
             </div>);
@@ -69,22 +71,22 @@ class OrderComponent extends React.Component<OrdersProps, {}> {
             <tbody>
                 {this.order.orderParts.map((op, idx) =>
                     <tr key={idx}>
-                        <td>{op.id}</td>
+                        <th scope="row">{op.id}</th>
                         <td>{op.part.name}</td>
                         <td>{op.batchOrderParts
                             .map(x => x.batchId)
                             .map(x => <Link key={x} to={`/batches/${x}`}>{x + " "}</Link>)}</td>
                         <td>
                             {op.successfulBatchId == undefined ? "Не готово" :
-                                <Link to={`/batches/${op.successfulBatchId}`} className="btn btn-default" >
+                                <Link to={`/batches/${op.successfulBatchId}`} className="btn btn-secondary" >
                                     Готово в партии № {op.successfulBatchId}
                                 </Link>
                             }
                         </td>
                         <td>
-                            <div className="btn-group">
-                                <LoadPartButton orderPartId={op.id} />
-                                <button className="btn btn-warning"
+                            <div>
+                                <LoadPartButton className="mx-1" orderPartId={op.id} />
+                                <button className="btn btn-warning mx-1"
                                     onClick={() => this.props.removeOrderParts(this.order.id, [op.id])}>
                                     Удалить
                                     </button>

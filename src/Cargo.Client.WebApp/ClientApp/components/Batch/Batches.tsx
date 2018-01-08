@@ -16,7 +16,7 @@ class BatchesComponent extends React.Component<BatchesProps, {}> {
 
     renderBatchesTable() {
         return (
-            <table className="table row">
+            <table className="table">
                 <thead>
                     <tr>
                         <th>
@@ -36,12 +36,12 @@ class BatchesComponent extends React.Component<BatchesProps, {}> {
                 <tbody>
                     {this.props.batches.map(b =>
                         <tr key={b.id}>
-                            <td>{b.id}</td>
+                            <th scope="row">{b.id}</th>
                             <td>{b.name}</td>
                             <td>{b.filename}</td>
                             <td>
-                                <Link className="btn btn-default" to={`/batches/${b.id}`}> Изменить </Link>
-                                <button className="btn btn-warning" onClick={() => this.props.deleteBatch(b.id)} >
+                                <Link className="btn btn-secondary mx-1" to={`/batches/${b.id}`}> Изменить </Link>
+                                <button className="btn btn-warning mx-1" onClick={() => this.props.deleteBatch(b.id)} >
                                     Удалить
                                 </button>
                             </td>
@@ -55,7 +55,7 @@ class BatchesComponent extends React.Component<BatchesProps, {}> {
     render() {
         return (
             <div>
-                <h1> Список партий </h1>
+                <h1> Список Jobs </h1>
                 {this.props.isLoading ? "Loading..." : this.renderBatchesTable()}
             </div>
         );
