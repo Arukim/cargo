@@ -27,7 +27,10 @@ class CustomersComponent extends React.Component<CustomersProps, {}> {
                 {this.props.customers.map(cust =>
                     <tr key={cust.id}>
                         <th scope="row">{cust.id}</th>
-                        <td>{cust.name}</td>
+                        <td><Link to={`customers/${cust.id}`} className="btn btn-secondary">
+                            {cust.name}
+                        </Link>
+                        </td>
                     </tr>
                 )}
             </tbody>

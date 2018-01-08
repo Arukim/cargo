@@ -22,6 +22,20 @@ class AddCustomerComponent extends React.Component<AddCustomerProps, AddCustomer
         };
     }
 
+    componentWillReceiveProps(nextProps: AddCustomerProps) {
+        if (nextProps.id != null) {
+            this.props.history.push(`/customers/${nextProps.id}`);
+        }
+    }
+
+    onAdd() {
+        let cust = {
+            name: this.state.name
+        } as Customer;
+
+        this.props.addCustomer(cust);
+    }
+
     public render() {
         return (
             <div>
@@ -39,7 +53,9 @@ class AddCustomerComponent extends React.Component<AddCustomerProps, AddCustomer
                     </div>
                     <div className="form-group row">
                         <button className="btn btn-success"
-                            disabled={this.state.name.length == 0} >
+                            disabled={this.state.name.length == 0}
+                            onClick={() => this.onAdd()}
+                        >
                             Добавить </button>
                     </div>
                 </div>

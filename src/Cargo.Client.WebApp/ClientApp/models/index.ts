@@ -50,3 +50,13 @@ export interface NewBatch {
     filename: string;
     orderPartIds: number[]
 }
+
+export interface CreateOrderModel {
+    name: string;
+    files: FileEntity[];
+}
+
+export interface FileEntity {
+    file: File;
+    count: number;
+}

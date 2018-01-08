@@ -1,7 +1,7 @@
 ﻿import * as React from 'react';
 import { connect } from 'react-redux';
 import { ApplicationState } from 'ClientApp/store';
-import * as CustomerStore from '../../store/Customer';
+import * as CustomerStore from '../../store/CustomerEdit';
 import { Customer } from '../../models';
 
 interface CreatePartComponentOwnProps {
@@ -69,6 +69,7 @@ class CreatePartComponent extends React.Component<CreatePartComponentProps, Crea
                             <input
                                 className="form-control"
                                 type="file" name="file"
+                                multiple
                                 accept=".stl"
                                 defaultValue="Pick model file"
                             ></input>

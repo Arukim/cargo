@@ -3,7 +3,7 @@ import { RouteComponentProps, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { ApplicationState } from 'ClientApp/store';
 import { Customer, Part } from '../../models';
-import * as CustomerStore from '../../store/Customer';
+import * as CustomerStore from '../../store/CustomerEdit';
 
 interface AddOrderPartOwnProps {
     customerId: number;
@@ -17,7 +17,7 @@ interface AddOrderPartState {
 
 // At runtime, Redux will merge together...
 type AddOrderProps =
-    CustomerStore.CustomerState // ... state we've requested from the Redux store
+    CustomerStore.CustomerEditState // ... state we've requested from the Redux store
     & typeof CustomerStore.actionCreators
     & AddOrderPartOwnProps;     // ... plus action creators we've requested
 
@@ -101,6 +101,6 @@ class AddOrderPartComponent extends React.Component<AddOrderProps, AddOrderPartS
 }
 
 export const AddOrderPart = connect(
-    (state: ApplicationState, own: AddOrderPartOwnProps) => Object.assign({}, state.customer, own), // Selects which state properties are merged into the component's props
+    (state: ApplicationState, own: AddOrderPartOwnProps) => Object.assign({}, state.customerEdit, own), // Selects which state properties are merged into the component's props
     CustomerStore.actionCreators                // Selects which action creators are merged into the component's props
 )(AddOrderPartComponent);

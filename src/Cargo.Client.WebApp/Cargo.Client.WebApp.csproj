@@ -38,17 +38,19 @@
     <None Remove="ClientApp\components\Batch\EditBatch.tsx" />
     <None Remove="ClientApp\components\Customer\AddCustomer.tsx" />
     <None Remove="ClientApp\components\Customer\Customers.tsx" />
+    <None Remove="ClientApp\components\Customer\EditCustomer.tsx" />
     <None Remove="ClientApp\components\Magics.tsx" />
     <None Remove="ClientApp\components\Magics\LoadPartButton.tsx" />
     <None Remove="ClientApp\components\Magics\NewBatch.tsx" />
     <None Remove="ClientApp\components\Order.tsx" />
+    <None Remove="ClientApp\components\Order\addOrder.tsx" />
     <None Remove="ClientApp\components\Order\addOrderPart.tsx" />
     <None Remove="ClientApp\components\Order\CreatePart.tsx" />
     <None Remove="ClientApp\models\index.ts" />
     <None Remove="ClientApp\store\Batch.ts" />
     <None Remove="ClientApp\store\Batches.ts" />
-    <None Remove="ClientApp\store\Customer.ts" />
     <None Remove="ClientApp\store\CustomerAdd.ts" />
+    <None Remove="ClientApp\store\CustomerEdit.ts" />
     <None Remove="ClientApp\store\Customers.ts" />
     <None Remove="ClientApp\store\Magics.ts" />
     <None Remove="ClientApp\store\Order.ts" />
@@ -66,9 +68,11 @@
     <TypeScriptCompile Include="ClientApp\components\Batch\EditBatch.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Customer\AddCustomer.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Customer\Customers.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\Customer\EditCustomer.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Magics\LoadPartButton.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Magics\Magics.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Batch\NewBatch.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\Customer\AddOrder.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Order\AddOrderPart.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Order\CreatePart.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Order\index.tsx" />
@@ -76,9 +80,9 @@
     <TypeScriptCompile Include="ClientApp\store\CustomerAdd.ts" />
     <TypeScriptCompile Include="ClientApp\store\Batch.ts" />
     <TypeScriptCompile Include="ClientApp\store\Batches.ts" />
+    <TypeScriptCompile Include="ClientApp\store\CustomerEdit.ts" />
     <TypeScriptCompile Include="ClientApp\store\Customers.ts" />
     <TypeScriptCompile Include="ClientApp\store\Order.ts" />
-    <TypeScriptCompile Include="ClientApp\store\Customer.ts" />
     <TypeScriptCompile Include="ClientApp\store\Magics.ts" />
     <TypeScriptCompile Include="ClientApp\store\Orders.ts" />
   </ItemGroup>
