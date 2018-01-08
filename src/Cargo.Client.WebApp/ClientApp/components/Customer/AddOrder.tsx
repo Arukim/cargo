@@ -30,6 +30,12 @@ class AddOrderComponent extends React.Component<AddOrderProps, AddOrderState>
         this.props.requestCustomer(this.customerId);
     }
 
+    componentWillReceiveProps(nextProps: AddOrderProps) {
+        if (nextProps.newOrderId != null) {
+            this.props.history.push(`/orders/${nextProps.newOrderId}`);
+        }
+    }
+
     get customerId(): number {
         return this.props.match.params.id;
     }
@@ -53,6 +59,17 @@ class AddOrderComponent extends React.Component<AddOrderProps, AddOrderState>
         };
         this.props.createOrder(orderModel);
     }
+
+    onRemove(fe: FileEntity) {
+        this.setState({ files: this.state.files.filter(x => x != fe) });
+    }
+
+    onCountChange(id: number, val: number) {
+        let files = this.state.files;
+        files[id].count = val;
+        this.setState({ files: files });
+    }
+
 
     public render() {
         return (
@@ -109,13 +126,6 @@ class AddOrderComponent extends React.Component<AddOrderProps, AddOrderState>
             </div>
         );
     }
-
-    onCountChange(id: number, val: number) {
-        let files = this.state.files;
-        files[id].count = val;
-        this.setState({ files: files });
-    }
-
     renderFiles() {
         return (
             <table className='table'>
@@ -144,7 +154,10 @@ class AddOrderComponent extends React.Component<AddOrderProps, AddOrderState>
                                     </input>
                                 </div>
                                 <div className="form-group">
-                                    <button>Удалить</button>
+                                    <button 
+                                        className="btn btn-warning"
+                                        onClick={() => this.onRemove(x)} >
+                                    Удалить</button>
                                 </div>
                             </td>
                         </tr>

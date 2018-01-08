@@ -14,7 +14,9 @@ namespace Cargo.Client.Persisting.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Filename = table.Column<string>(nullable: true),
+                    Name = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -60,16 +62,17 @@ namespace Cargo.Client.Persisting.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    CustomerId = table.Column<int>(nullable: true),
-                    Name = table.Column<string>(nullable: true)
+                    Filename = table.Column<string>(nullable: true),
+                    Name = table.Column<string>(nullable: true),
+                    OrderId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Parts", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Parts_Customers_CustomerId",
-                        column: x => x.CustomerId,
-                        principalTable: "Customers",
+                        name: "FK_Parts_Orders_OrderId",
+                        column: x => x.OrderId,
+                        principalTable: "Orders",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -80,19 +83,13 @@ namespace Cargo.Client.Persisting.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    BatchId = table.Column<int>(nullable: true),
                     OrderId = table.Column<int>(nullable: false),
-                    PartId = table.Column<int>(nullable: false)
+                    PartId = table.Column<int>(nullable: false),
+                    SuccessfulBatchId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_OrderParts", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_OrderParts_Batches_BatchId",
-                        column: x => x.BatchId,
-                        principalTable: "Batches",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_OrderParts_Orders_OrderId",
                         column: x => x.OrderId,
@@ -105,12 +102,49 @@ namespace Cargo.Client.Persisting.Migrations
                         principalTable: "Parts",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_OrderParts_Batches_SuccessfulBatchId",
+                        column: x => x.SuccessfulBatchId,
+                        principalTable: "Batches",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "BatchOrderParts",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    BatchId = table.Column<int>(nullable: false),
+                    OrderPartId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BatchOrderParts", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_BatchOrderParts_Batches_BatchId",
+                        column: x => x.BatchId,
+                        principalTable: "Batches",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_BatchOrderParts_OrderParts_OrderPartId",
+                        column: x => x.OrderPartId,
+                        principalTable: "OrderParts",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_OrderParts_BatchId",
-                table: "OrderParts",
+                name: "IX_BatchOrderParts_BatchId",
+                table: "BatchOrderParts",
                 column: "BatchId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_BatchOrderParts_OrderPartId",
+                table: "BatchOrderParts",
+                column: "OrderPartId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_OrderParts_OrderId",
@@ -123,29 +157,37 @@ namespace Cargo.Client.Persisting.Migrations
                 column: "PartId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_OrderParts_SuccessfulBatchId",
+                table: "OrderParts",
+                column: "SuccessfulBatchId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Orders_CustomerId",
                 table: "Orders",
                 column: "CustomerId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Parts_CustomerId",
+                name: "IX_Parts_OrderId",
                 table: "Parts",
-                column: "CustomerId");
+                column: "OrderId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "BatchOrderParts");
+
+            migrationBuilder.DropTable(
                 name: "OrderParts");
+
+            migrationBuilder.DropTable(
+                name: "Parts");
 
             migrationBuilder.DropTable(
                 name: "Batches");
 
             migrationBuilder.DropTable(
                 name: "Orders");
-
-            migrationBuilder.DropTable(
-                name: "Parts");
 
             migrationBuilder.DropTable(
                 name: "Customers");

@@ -10,14 +10,19 @@ namespace Cargo.Client.Logic
 {
     public class PathBuilder
     {
-        public static string GetPartDirectory(Customer cust)
+        public static string GetPartDirectory(Part part)
         {
-            return Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/upload", cust.Id.ToString());
+            return Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/upload", part.OrderId.ToString());
+        }
+
+        public static string GetPartDirectory(Order order)
+        {
+            return Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/upload", order.Id.ToString());
         }
 
         public static string GetPartFile(Part part)
         {
-            return Path.Combine(GetPartDirectory(part.Customer), part.Filename);
+            return Path.Combine(GetPartDirectory(part), part.Filename);
         }
 
         public static string GetBatchDirectory()

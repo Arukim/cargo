@@ -11,7 +11,7 @@ using System;
 namespace Cargo.Client.Persisting.Migrations
 {
     [DbContext(typeof(CargoContext))]
-    [Migration("20180104172924_InitialCreate")]
+    [Migration("20180108185835_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -26,9 +26,31 @@ namespace Cargo.Client.Persisting.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<string>("Filename");
+
+                    b.Property<string>("Name");
+
                     b.HasKey("Id");
 
                     b.ToTable("Batches");
+                });
+
+            modelBuilder.Entity("Cargo.Client.Persisting.Entities.BatchOrderPart", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("BatchId");
+
+                    b.Property<int>("OrderPartId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BatchId");
+
+                    b.HasIndex("OrderPartId");
+
+                    b.ToTable("BatchOrderParts");
                 });
 
             modelBuilder.Entity("Cargo.Client.Persisting.Entities.Customer", b =>
@@ -64,19 +86,19 @@ namespace Cargo.Client.Persisting.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int?>("BatchId");
-
                     b.Property<int>("OrderId");
 
                     b.Property<int>("PartId");
 
-                    b.HasKey("Id");
+                    b.Property<int?>("SuccessfulBatchId");
 
-                    b.HasIndex("BatchId");
+                    b.HasKey("Id");
 
                     b.HasIndex("OrderId");
 
                     b.HasIndex("PartId");
+
+                    b.HasIndex("SuccessfulBatchId");
 
                     b.ToTable("OrderParts");
                 });
@@ -86,15 +108,30 @@ namespace Cargo.Client.Persisting.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int?>("CustomerId");
+                    b.Property<string>("Filename");
 
                     b.Property<string>("Name");
 
+                    b.Property<int?>("OrderId");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("CustomerId");
+                    b.HasIndex("OrderId");
 
                     b.ToTable("Parts");
+                });
+
+            modelBuilder.Entity("Cargo.Client.Persisting.Entities.BatchOrderPart", b =>
+                {
+                    b.HasOne("Cargo.Client.Persisting.Entities.Batch", "Batch")
+                        .WithMany("BatchOrderParts")
+                        .HasForeignKey("BatchId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Cargo.Client.Persisting.Entities.OrderPart", "OrderPart")
+                        .WithMany("BatchOrderParts")
+                        .HasForeignKey("OrderPartId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Cargo.Client.Persisting.Entities.Order", b =>
@@ -107,10 +144,6 @@ namespace Cargo.Client.Persisting.Migrations
 
             modelBuilder.Entity("Cargo.Client.Persisting.Entities.OrderPart", b =>
                 {
-                    b.HasOne("Cargo.Client.Persisting.Entities.Batch", "Batch")
-                        .WithMany("OrderParts")
-                        .HasForeignKey("BatchId");
-
                     b.HasOne("Cargo.Client.Persisting.Entities.Order", "Order")
                         .WithMany("OrderParts")
                         .HasForeignKey("OrderId")
@@ -120,13 +153,17 @@ namespace Cargo.Client.Persisting.Migrations
                         .WithMany("OrderParts")
                         .HasForeignKey("PartId")
                         .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Cargo.Client.Persisting.Entities.Batch", "SuccessfulBatch")
+                        .WithMany()
+                        .HasForeignKey("SuccessfulBatchId");
                 });
 
             modelBuilder.Entity("Cargo.Client.Persisting.Entities.Part", b =>
                 {
-                    b.HasOne("Cargo.Client.Persisting.Entities.Customer", "Customer")
+                    b.HasOne("Cargo.Client.Persisting.Entities.Order", "Order")
                         .WithMany("Parts")
-                        .HasForeignKey("CustomerId");
+                        .HasForeignKey("OrderId");
                 });
 #pragma warning restore 612, 618
         }

@@ -21,14 +21,24 @@ class CustomersComponent extends React.Component<CustomersProps, {}> {
                 <tr>
                     <th>Id</th>
                     <th>Название</th>
+                    <th>Действия</th>
                 </tr>
             </thead>
             <tbody>
                 {this.props.customers.map(cust =>
                     <tr key={cust.id}>
                         <th scope="row">{cust.id}</th>
-                        <td><Link to={`customers/${cust.id}`} className="btn btn-secondary">
-                            {cust.name}
+                        <td>{cust.name}</td>
+                        <td>
+                            <Link
+                                to={`customers/${cust.id}`}
+                                className="btn btn-secondary mx-1">
+                                Редактировать
+                            </Link>
+                            <Link className="btn btn-success mx-1"
+                                to={`/customers/${cust.id}/orders/add`}
+                            >
+                                Новый заказ
                         </Link>
                         </td>
                     </tr>
@@ -40,7 +50,9 @@ class CustomersComponent extends React.Component<CustomersProps, {}> {
     public render() {
         return <div>
             <h1>Заказчики</h1>
-            <Link className="btn btn-success" to='/customers/add'> Добавить заказчика </Link>
+            <div className="mb-3">
+                <Link className="btn btn-success" to='/customers/add'> Добавить заказчика </Link>
+            </div>
             {this.renderCustomersTable()}
         </div>
     }

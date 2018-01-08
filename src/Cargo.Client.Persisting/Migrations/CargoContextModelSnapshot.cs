@@ -107,15 +107,15 @@ namespace Cargo.Client.Persisting.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int?>("CustomerId");
-
                     b.Property<string>("Filename");
 
                     b.Property<string>("Name");
 
+                    b.Property<int?>("OrderId");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("CustomerId");
+                    b.HasIndex("OrderId");
 
                     b.ToTable("Parts");
                 });
@@ -160,9 +160,9 @@ namespace Cargo.Client.Persisting.Migrations
 
             modelBuilder.Entity("Cargo.Client.Persisting.Entities.Part", b =>
                 {
-                    b.HasOne("Cargo.Client.Persisting.Entities.Customer", "Customer")
+                    b.HasOne("Cargo.Client.Persisting.Entities.Order", "Order")
                         .WithMany("Parts")
-                        .HasForeignKey("CustomerId");
+                        .HasForeignKey("OrderId");
                 });
 #pragma warning restore 612, 618
         }

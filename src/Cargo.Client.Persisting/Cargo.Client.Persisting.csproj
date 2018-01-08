@@ -106,25 +106,9 @@
     <Compile Include="Entities\Order.cs" />
     <Compile Include="Entities\OrderPart.cs" />
     <Compile Include="Entities\Part.cs" />
-    <Compile Include="Migrations\20180104172924_InitialCreate.cs" />
-    <Compile Include="Migrations\20180104172924_InitialCreate.designer.cs">
-      <DependentUpon>20180104172924_InitialCreate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\20180104173429_Part.Filename.cs" />
-    <Compile Include="Migrations\20180104173429_Part.Filename.designer.cs">
-      <DependentUpon>20180104173429_Part.Filename.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\20180105192729_Batch.Filename.cs" />
-    <Compile Include="Migrations\20180105192729_Batch.Filename.designer.cs">
-      <DependentUpon>20180105192729_Batch.Filename.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\20180106085117_BatchOrderPart.cs" />
-    <Compile Include="Migrations\20180106085117_BatchOrderPart.designer.cs">
-      <DependentUpon>20180106085117_BatchOrderPart.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\20180106091821_OrderPart.SuccessfulBatch.cs" />
-    <Compile Include="Migrations\20180106091821_OrderPart.SuccessfulBatch.designer.cs">
-      <DependentUpon>20180106091821_OrderPart.SuccessfulBatch.cs</DependentUpon>
+    <Compile Include="Migrations\20180108185835_InitialCreate.cs" />
+    <Compile Include="Migrations\20180108185835_InitialCreate.designer.cs">
+      <DependentUpon>20180108185835_InitialCreate.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\CargoContextModelSnapshot.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -42,7 +42,6 @@ namespace Cargo.Client.WebApp.Controllers.Api
         {
             var op = ctx.OrderParts
                 .Include(x => x.Part)
-                .ThenInclude(x => x.Customer)
                 .FirstOrDefault(x => x.Id == id);
 
             if (op == null)
@@ -56,7 +55,6 @@ namespace Cargo.Client.WebApp.Controllers.Api
         {
             var op = ctx.OrderParts
                 .Include(x => x.Part)
-                .ThenInclude(x => x.Customer)
                 .FirstOrDefault(x => x.Id == id);
 
             if (op == null)

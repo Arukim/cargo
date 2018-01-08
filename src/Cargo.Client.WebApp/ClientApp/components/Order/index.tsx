@@ -34,20 +34,6 @@ class OrderComponent extends React.Component<OrdersProps, {}> {
                     <div>
                         <h1>Заказ "{this.order.name}"</h1>
 
-                        <div className="row">
-                            <div className="col-xl-4 col-lg-6">
-                                <AddOrderPart
-                                    customerId={this.order.customer.id}
-                                    onAddOrderPart={(partId, count) =>
-                                        this.props.addOrderPart(this.order.id, partId, count)}
-                                />
-                            </div>
-                            <div className="col-xl-4 col-lg-6">
-                                <CreatePart
-                                    customerId={this.order.customer.id}
-                                />
-                            </div>
-                        </div>
                         <div className="col-md-12">
                             {this.renderOrderParts()}
                         </div>  

@@ -48,7 +48,6 @@ namespace Cargo.Client.WebApp.Controllers.Api
         public async Task<Customer> Get(int id)
         {
             return await ctx.Customers
-                    .Include(x => x.Parts)
                     .FirstOrDefaultAsync(x => x.Id == id);
         }
 
@@ -60,11 +59,20 @@ namespace Cargo.Client.WebApp.Controllers.Api
 
             if (cust == null)
                 return BadRequest("no such customer");
-            cust.Parts = new List<Part>();
             cust.Orders = new List<Order>();
 
 
-            var path = PathBuilder.GetPartDirectory(cust);
+            var order = new Order()
+            {
+                Name = req.Name,
+                OrderParts = new List<OrderPart> { },
+                Parts = new List<Part> { }
+            };
+            
+            cust.Orders.Add(order);
+            await ctx.SaveChangesAsync();
+            var path = PathBuilder.GetPartDirectory(order);
+
             Directory.CreateDirectory(path);
 
             var parts = new List<Part>();
@@ -72,8 +80,8 @@ namespace Cargo.Client.WebApp.Controllers.Api
             foreach (var file in req.Files)
             {
                 var part = new Part { Name = file.FileName };
-                
-                cust.Parts.Add(part);
+
+                order.Parts.Add(part);
                 parts.Add(part);
 
                 await ctx.SaveChangesAsync();
@@ -86,12 +94,6 @@ namespace Cargo.Client.WebApp.Controllers.Api
                 }
             }
 
-            var order = new Order()
-            {
-                Name = req.Name,
-                OrderParts = new List<OrderPart> { }
-            };
-
             for(var i = 0; i < req.Count.Count; i++)
             {
                 for(int j = 0; j < req.Count[i]; j++)
@@ -102,8 +104,6 @@ namespace Cargo.Client.WebApp.Controllers.Api
                     });
                 }
             }
-
-            cust.Orders.Add(order);
             await ctx.SaveChangesAsync();
 
             return Ok(order.Id);
@@ -122,26 +122,7 @@ namespace Cargo.Client.WebApp.Controllers.Api
             if (cust == null)
                 return BadRequest("no such customer");
 
-            var path = PathBuilder.GetPartDirectory(cust);
-            Directory.CreateDirectory(path);
-
-            var part = new Part { Name = file.FileName };
-            cust.Parts = new List<Part>();
-            cust.Parts.Add(part);
-            await ctx.SaveChangesAsync();
-            var filename = $"{part.Id}_{file.FileName}";
-            var filePath = Path.Combine(path, filename);
-            
-            using (var stream = new FileStream(filePath, FileMode.CreateNew))
-            {
-                await file.CopyToAsync(stream);
-            }
-
-            part.Name = file.FileName;
-            part.Filename = filename;
-            await ctx.SaveChangesAsync();
-
-            return Created("", new { Id = part.Id });
+            throw new Exception();
         }
     }   
 

@@ -15,5 +15,6 @@ namespace Cargo.Client.Persisting.Entities
         public virtual Customer Customer { get; set; }
 
         public virtual ICollection<OrderPart> OrderParts { get; set; }
+        public virtual ICollection<Part> Parts { get; set; }
     }
 }
