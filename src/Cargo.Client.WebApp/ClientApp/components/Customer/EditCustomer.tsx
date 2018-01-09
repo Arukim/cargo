@@ -27,8 +27,7 @@ class EditCustomerComponent extends React.Component<EditCustomerProps, {}>
                     <div>
                         <legend>Заказчик {this.props.customer.name} </legend>
                         <Link className="btn btn-success"
-                            to={`/customers/${this.customerId}/orders/add`}
-                        >
+                            to={`/customers/${this.customerId}/orders/add`}>
                             Новый заказ
                         </Link>
                     </div>

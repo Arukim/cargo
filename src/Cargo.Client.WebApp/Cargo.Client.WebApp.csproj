@@ -36,16 +36,17 @@
   <ItemGroup>
     <None Remove="ClientApp\components\Batch\Batches.tsx" />
     <None Remove="ClientApp\components\Batch\EditBatch.tsx" />
+    <None Remove="ClientApp\components\Batch\index.ts" />
     <None Remove="ClientApp\components\Customer\AddCustomer.tsx" />
     <None Remove="ClientApp\components\Customer\Customers.tsx" />
     <None Remove="ClientApp\components\Customer\EditCustomer.tsx" />
     <None Remove="ClientApp\components\Magics.tsx" />
     <None Remove="ClientApp\components\Magics\LoadPartButton.tsx" />
+    <None Remove="ClientApp\components\Magics\LoadParts.tsx" />
     <None Remove="ClientApp\components\Magics\NewBatch.tsx" />
     <None Remove="ClientApp\components\Order.tsx" />
     <None Remove="ClientApp\components\Order\addOrder.tsx" />
-    <None Remove="ClientApp\components\Order\addOrderPart.tsx" />
-    <None Remove="ClientApp\components\Order\CreatePart.tsx" />
+    <None Remove="ClientApp\components\Order\Orders.tsx" />
     <None Remove="ClientApp\models\index.ts" />
     <None Remove="ClientApp\store\Batch.ts" />
     <None Remove="ClientApp\store\Batches.ts" />
@@ -66,16 +67,17 @@
   <ItemGroup>
     <TypeScriptCompile Include="ClientApp\components\Batch\Batches.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Batch\EditBatch.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\Batch\index.ts" />
     <TypeScriptCompile Include="ClientApp\components\Customer\AddCustomer.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Customer\Customers.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Customer\EditCustomer.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Magics\LoadPartButton.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\Magics\LoadParts.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Magics\Magics.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Batch\NewBatch.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Customer\AddOrder.tsx" />
-    <TypeScriptCompile Include="ClientApp\components\Order\AddOrderPart.tsx" />
-    <TypeScriptCompile Include="ClientApp\components\Order\CreatePart.tsx" />
-    <TypeScriptCompile Include="ClientApp\components\Order\index.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\Order\EditOrder.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\Order\Orders.tsx" />
     <TypeScriptCompile Include="ClientApp\models\index.ts" />
     <TypeScriptCompile Include="ClientApp\store\CustomerAdd.ts" />
     <TypeScriptCompile Include="ClientApp\store\Batch.ts" />

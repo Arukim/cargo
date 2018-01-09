@@ -5,10 +5,8 @@ import { ApplicationState } from './../../store';
 import { Order } from 'ClientApp/models';
 import * as OrderStore from '../../store/Order';
 
-import { AddOrderPart } from './AddOrderPart';
-import { CreatePart } from './CreatePart';
-
 import { LoadPartButton } from '../Magics/LoadPartButton';
+import { LoadParts } from '../Magics/LoadParts';
 
 // At runtime, Redux will merge together...
 type OrdersProps =
@@ -26,6 +24,13 @@ class OrderComponent extends React.Component<OrdersProps, {}> {
         this.props.requestOrder(this.props.match.params.id);
     }
 
+    private get uniqueOrderParts(): number[] {
+        return Array.from(
+            new Map(this.props.order
+                .orderParts.map<[number, number]>(x => [x.part.id, x.id])
+            ).values());
+    }
+
     public render() {
         return (
             <div className="container-fluid">
@@ -35,8 +40,12 @@ class OrderComponent extends React.Component<OrdersProps, {}> {
                         <h1>Заказ "{this.order.name}"</h1>
 
                         <div className="col-md-12">
+                            <LoadParts orderParts={this.uniqueOrderParts} />
+                        </div>
+
+                        <div className="col-md-12">
                             {this.renderOrderParts()}
-                        </div>  
+                        </div>
                     </div>
                 }
             </div>);
@@ -85,7 +94,7 @@ class OrderComponent extends React.Component<OrdersProps, {}> {
     }
 }
 
-export default connect(
+export const EditOrder = connect(
     (state: ApplicationState) => state.order, // Selects which state properties are merged into the component's props
     OrderStore.actionCreators                 // Selects which action creators are merged into the component's props
 )(OrderComponent) as typeof OrderComponent;

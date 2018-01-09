@@ -38,10 +38,30 @@ namespace Cargo.Client.MagicsProxy
             try
             {
                 magics.LoadSTLPart(PathBuilder.GetPartFile(orderPart.Part));
-                var status = ReadStatus(magics);
+                var numOfStl = Int32.Parse(magics.GetPlatformProperty("NumOfStl"));
 
-                magics.SetModelProperty(status.ModelsCount - 1, "StlName", StlName(orderPart));
+                magics.SetModelProperty(numOfStl - 1, "StlName", StlName(orderPart));
 
+                return ReadStatus(magics);
+            }
+            finally
+            {
+                Marshal.ReleaseComObject(magics);
+            }
+        }
+
+        public MagicsStatus LoadParts(IEnumerable<OrderPart> parts)
+        {
+            var magics = new ApplicationMagics();
+            try
+            {
+                foreach (var orderPart in parts)
+                {
+                    magics.LoadSTLPart(PathBuilder.GetPartFile(orderPart.Part));
+
+                    var numOfStl = Int32.Parse(magics.GetPlatformProperty("NumOfStl"));
+                    magics.SetModelProperty(numOfStl - 1, "StlName", StlName(orderPart));
+                }
                 return ReadStatus(magics);
             }
             finally
@@ -106,10 +126,10 @@ namespace Cargo.Client.MagicsProxy
             {
                 var name = magics.GetModelProperty(i, "StlName");
                 var parts = name.Split('_');
-                if(parts.Length > 1)
+                if (parts.Length > 1)
                 {
                     var res = 0;
-                    if(Int32.TryParse(parts[0], out res))
+                    if (Int32.TryParse(parts[0], out res))
                     {
                         partList.Add(res);
                     }
@@ -120,7 +140,7 @@ namespace Cargo.Client.MagicsProxy
             {
                 ModelsCount = numOfStl,
                 ModelsVolume = volume,
-                OrderParts = partList   
+                OrderParts = partList
             };
         }
     }

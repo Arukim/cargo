@@ -14,13 +14,13 @@ export class NavMenu extends React.Component<{}, {}> {
                 <div className="collapse navbar-collapse" id="navbarNav">
                     <ul className="navbar-nav">
                         <li className="nav-item">
-                            <NavLink exact to={'/'} activeClassName='active' className="nav-link">
-                                <span className='glyphicon glyphicon-home'></span> Заказы
+                            <NavLink to={'/customers'} activeClassName='active' className="nav-link">
+                                <span className='glyphicon glyphicon-user'></span> Заказчики
                             </NavLink>
                         </li>
                         <li className="nav-item">
-                            <NavLink to={'/customers'} activeClassName='active' className="nav-link">
-                                <span className='glyphicon glyphicon-user'></span> Заказчики
+                            <NavLink exact to={'/orders'} activeClassName='active' className="nav-link">
+                                <span className='glyphicon glyphicon-home'></span> Заказы
                             </NavLink>
                         </li>
                         <li className="nav-item">

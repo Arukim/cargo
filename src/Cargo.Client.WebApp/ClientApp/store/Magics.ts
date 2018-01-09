@@ -37,7 +37,6 @@ interface ReceiveMagicsStatus {
 
 interface LoadedOrderPart {
     type: "LOADED_ORDERPART";
-    id: number;
     status: MagicsStatus;
 }
 
@@ -78,7 +77,16 @@ export const actionCreators = {
         let fetchTask = fetch(`api/Magics/Load/${id}`, {
             method: "POST"
         }).then(resp => resp.json() as Promise<MagicsStatus>)
-            .then(data => dispatch({ type: 'LOADED_ORDERPART', id: id, status: data }));
+            .then(data => dispatch({ type: 'LOADED_ORDERPART', status: data }));
+        addTask(fetchTask);
+    },
+    LoadOrderParts: (ids: number[]): AppThunkAction<KnownAction> => (dispatch, getState) => {
+        let fetchTask = fetch(`api/Magics/Load`, {
+            method: "POST",
+            headers: new Headers({ 'content-type': 'application/json' }),
+            body: JSON.stringify(ids)
+        }).then(resp => resp.json() as Promise<MagicsStatus>)
+            .then(data => dispatch({ type: 'LOADED_ORDERPART', status: data }));
         addTask(fetchTask);
     },
     UnloadOrderPart: (id: number): AppThunkAction<KnownAction> => (dispatch, getState) => {

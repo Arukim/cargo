@@ -50,6 +50,21 @@ namespace Cargo.Client.WebApp.Controllers.Api
             return Ok(magics.LoadPart(op));
         }
 
+
+        [HttpPost("load")]
+        public async Task<IActionResult> Load([FromBody] List<int> ids)
+        {
+
+            var ops = await ctx.OrderParts
+                .Include(x => x.Part)
+                .Where(x => ids.Contains(x.Id))
+                .ToListAsync();
+
+            var status = magics.LoadParts(ops);
+            return Ok(status);
+
+        }
+
         [HttpPost("[action]/{id}")]
         public IActionResult Unload(int id)
         {
