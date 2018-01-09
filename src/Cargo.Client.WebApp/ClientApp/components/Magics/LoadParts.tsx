@@ -16,7 +16,7 @@ type LoadPartsButtonState =
 class LoadPartsComponent extends React.Component<LoadPartsButtonState, {}> {
 
     onClick() {
-        this.props.LoadOrderParts(this.props.orderParts);
+        this.props.loadOrderParts(this.props.orderParts);
     }
 
 

@@ -22,9 +22,9 @@ class LoadPartButtonComponent extends React.Component<LoadPartButtonProps, {}> {
 
     onClick() {
         if (!this.isLoaded) {
-            this.props.LoadOrderPart(this.props.orderPartId);
+            this.props.loadOrderPart(this.props.orderPartId);
         } else {
-            this.props.UnloadOrderPart(this.props.orderPartId);
+            this.props.unloadOrderPart(this.props.orderPartId);
         }
     }
 

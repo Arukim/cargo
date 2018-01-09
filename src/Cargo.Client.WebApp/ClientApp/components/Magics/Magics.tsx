@@ -68,8 +68,12 @@ class MagicsComponent extends React.Component<MagicsProps, {}> {
                             className="btn btn-primary mx-1"
                             disabled={!this.props.isAvailable}
                             onClick={() => this.props.requestStatus()} > Обновить </button>
+                        <button className="btn btn-warning mx-1"
+                            disabled={!this.props.isAvailable}
+                            onClick={() => this.props.unloadAll()}> Очистить сцену </button>
+
                         <Link className="btn btn-success mx-1" to={`/batches/new`} >
-                            Создать партию
+                            Создать Job
                     </Link>
                     </div>
                 </div >

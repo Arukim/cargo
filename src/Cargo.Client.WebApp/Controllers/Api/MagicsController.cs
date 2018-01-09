@@ -77,5 +77,11 @@ namespace Cargo.Client.WebApp.Controllers.Api
 
             return Ok(magics.UnloadPart(op));
         }
+
+        [HttpPost("[action]")]
+        public IActionResult UnloadAll()
+        {
+            return Ok(magics.UnloadAll());
+        }
     }
 }

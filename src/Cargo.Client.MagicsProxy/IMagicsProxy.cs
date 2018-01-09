@@ -14,6 +14,7 @@ namespace Cargo.Client.MagicsProxy
         MagicsStatus LoadPart(OrderPart part);
         MagicsStatus LoadParts(IEnumerable<OrderPart> parts);
         MagicsStatus UnloadPart(OrderPart part);
+        MagicsStatus UnloadAll();
         MagicsStatus Save(Batch batch);
     }
 }

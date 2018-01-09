@@ -95,6 +95,24 @@ namespace Cargo.Client.MagicsProxy
             }
         }
 
+        public MagicsStatus UnloadAll()
+        {
+            var magics = new ApplicationMagics();
+            try
+            {
+                while (Int32.Parse(magics.GetPlatformProperty("NumOfStl")) > 0)
+                {
+                    magics.UnloadModel(0);
+                }
+
+                return ReadStatus(magics);
+            }
+            finally
+            {
+                Marshal.ReleaseComObject(magics);
+            }
+        }
+
         public MagicsStatus Save(Batch batch)
         {
             var magics = new ApplicationMagics();

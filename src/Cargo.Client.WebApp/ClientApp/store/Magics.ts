@@ -73,14 +73,14 @@ export const actionCreators = {
         addTask(fetchTask);
         dispatch({ type: 'REQUEST_APP_COUNT' });
     },
-    LoadOrderPart: (id: number): AppThunkAction<KnownAction> => (dispatch, getState) => {
+    loadOrderPart: (id: number): AppThunkAction<KnownAction> => (dispatch, getState) => {
         let fetchTask = fetch(`api/Magics/Load/${id}`, {
             method: "POST"
         }).then(resp => resp.json() as Promise<MagicsStatus>)
             .then(data => dispatch({ type: 'LOADED_ORDERPART', status: data }));
         addTask(fetchTask);
     },
-    LoadOrderParts: (ids: number[]): AppThunkAction<KnownAction> => (dispatch, getState) => {
+    loadOrderParts: (ids: number[]): AppThunkAction<KnownAction> => (dispatch, getState) => {
         let fetchTask = fetch(`api/Magics/Load`, {
             method: "POST",
             headers: new Headers({ 'content-type': 'application/json' }),
@@ -89,13 +89,20 @@ export const actionCreators = {
             .then(data => dispatch({ type: 'LOADED_ORDERPART', status: data }));
         addTask(fetchTask);
     },
-    UnloadOrderPart: (id: number): AppThunkAction<KnownAction> => (dispatch, getState) => {
+    unloadOrderPart: (id: number): AppThunkAction<KnownAction> => (dispatch, getState) => {
         let fetchTask = fetch(`api/Magics/Unload/${id}`, {
             method: "POST"
         }).then(resp => resp.json() as Promise<MagicsStatus>)
             .then(data => dispatch({ type: 'UNLOADED_ORDERPART', id: id, status: data }));
         addTask(fetchTask);
     },
+    unloadAll: (): AppThunkAction<KnownAction> => (dispatch, getState) => {
+        let fetchTask = fetch(`api/Magics/UnloadAll`, {
+            method: "POST"
+        }).then(resp => resp.json() as Promise<MagicsStatus>)
+            .then(data => dispatch({ type: "LOADED_ORDERPART", status: data }));
+        addTask(fetchTask);
+    }
 };
 
 const unloadedState: MagicsState = {
