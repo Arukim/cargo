@@ -22,7 +22,13 @@ interface ReceiveOrdersAction {
     orders: Order[];
 }
 
-type KnownAction = RequestOrdersAction | ReceiveOrdersAction;
+interface DeletedOrder {
+    type: "DELETED_ORDER";
+    id: number;
+}
+
+type KnownAction = RequestOrdersAction | ReceiveOrdersAction
+    | DeletedOrder;
 
 
 export const actionCreators = {
@@ -30,12 +36,15 @@ export const actionCreators = {
         // Only load data if it's something we don't already have (and are not already loading)
         let fetchTask = fetch(`api/Orders`)
             .then(response => response.json() as Promise<Order[]>)
-            .then(data => {
-                dispatch({ type: 'RECEIVE_ORDERS', orders: data });
-            });
+            .then(data => dispatch({ type: 'RECEIVE_ORDERS', orders: data }));
 
         addTask(fetchTask); // Ensure server-side prerendering waits for this to complete
         dispatch({ type: 'REQUEST_ORDERS' });
+    },
+    deleteOrder: (id: number): AppThunkAction<KnownAction> => (dispatch, getState) => {
+        let fetchTask = fetch(`api/Orders/${id}`, { method: "DELETE" })
+            .then(() => dispatch({ type: 'DELETED_ORDER', id: id }));
+        addTask(fetchTask);
     }
 };
 
@@ -53,6 +62,11 @@ export const reducer: Reducer<OrdersState> = (state: OrdersState, incomingAction
             return {
                 orders: action.orders,
                 isLoading: false
+            };
+        case 'DELETED_ORDER':
+            return {
+                ...state,
+                orders: state.orders.filter(x => x.id != action.id)
             };
         default:
             // The following line guarantees that every action in the KnownAction union has been covered by a case above

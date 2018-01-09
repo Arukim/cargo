@@ -45,8 +45,7 @@ namespace Cargo.Client.WebApp.Controllers.Api
             }).ToList());
             
             await ctx.SaveChangesAsync();
-
-            magics.Save(batch);
+            
             return Ok(batch.Id);
         }
 
@@ -78,6 +77,8 @@ namespace Cargo.Client.WebApp.Controllers.Api
                 .Include(x => x.BatchOrderParts)
                     .ThenInclude(x => x.OrderPart)
                     .ThenInclude(x => x.Part)
+                    .ThenInclude(x => x.Order)
+                    .ThenInclude(x => x.Customer)
                 .FirstOrDefaultAsync(x => x.Id == id);
             if (batch == null)
                 return BadRequest("no such batch");

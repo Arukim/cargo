@@ -73,8 +73,29 @@ namespace Cargo.Client.WebApp.Controllers.Api
             return Ok(newOrderParts);
         }
 
-        [HttpDelete("{orderId}/orderParts")]
+        [HttpDelete("{orderId}")]
+        public async Task<IActionResult> RemoveOrder(int orderId)
+        {
+            var order = await ctx.Orders
+                .Include(x => x.Parts)
+                .FirstOrDefaultAsync(x => x.Id == orderId);
+            if(order == null)
+                return BadRequest($"no order with id:{orderId} exists");
 
+            foreach(var p in order.Parts.ToList())
+            {
+                ctx.Parts.Remove(p);
+            }
+            await ctx.SaveChangesAsync();
+
+            ctx.Orders.Remove(order);
+
+            await ctx.SaveChangesAsync();
+
+            return Ok();
+        }
+
+        [HttpDelete("{orderId}/orderParts")]
         public async Task<IActionResult> RemoveOrderParts(int orderId,
             [FromBody] RemoveOrderParts request)
         {

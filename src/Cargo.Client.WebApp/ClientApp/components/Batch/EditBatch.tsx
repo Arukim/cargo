@@ -32,6 +32,15 @@ class EditBatchComponent extends React.Component<EditBatchProps, {}>{
                             Id
                         </th>
                         <th>
+                            Деталь
+                        </th>
+                        <th>
+                            Заказ
+                        </th>
+                        <th>
+                            Заказчик
+                            </th>
+                        <th>
                             Статус
                         </th>
                     </tr>
@@ -41,6 +50,9 @@ class EditBatchComponent extends React.Component<EditBatchProps, {}>{
                         <tr key={op.id}>
                             <th scope="row">{idx}</th>
                             <td>{op.id}</td>
+                            <td>{op.part.name}</td>
+                            <td>{op.order.name}</td>
+                            <td>{op.order.customer.name} </td>
                             <td>
                                 {op.successfulBatchId == undefined ?
                                     <button
@@ -54,7 +66,7 @@ class EditBatchComponent extends React.Component<EditBatchProps, {}>{
                                 }
                             </td>
                         </tr>
-                            )}
+                    )}
                 </tbody>
             </table>
         );
@@ -63,15 +75,15 @@ class EditBatchComponent extends React.Component<EditBatchProps, {}>{
     render() {
         return (
             <div>
-                        <h1> Редактирование партии {this.batchId} </h1>
-                        {this.props.isLoading ? "Loading..." :
-                            <div>
-                                <label>{this.props.batch.filename}</label>
-                                {this.renderOrderPartTable()}
-                            </div>
-                        }
+                {this.props.isLoading ? "Loading..." :
+                    <div>
+                        <h1> Редактирование "Job" {this.props.batch.name} </h1>
+                        <label>{this.props.batch.filename}</label>
+                        {this.renderOrderPartTable()}
                     </div>
-                    );
+                }
+            </div>
+        );
     }
 }
 

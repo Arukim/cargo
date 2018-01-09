@@ -85,6 +85,7 @@ namespace Cargo.Client.WebApp.Controllers.Api
                 parts.Add(part);
 
                 await ctx.SaveChangesAsync();
+
                 var filename = $"{part.Id}_{file.FileName}";
                 var filePath = Path.Combine(path, filename);
 
@@ -92,6 +93,10 @@ namespace Cargo.Client.WebApp.Controllers.Api
                 {
                     await file.CopyToAsync(stream);
                 }
+
+                part.Filename = filename;
+
+                await ctx.SaveChangesAsync();
             }
 
             for(var i = 0; i < req.Count.Count; i++)

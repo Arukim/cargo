@@ -34,7 +34,11 @@ class Home extends React.Component<OrdersProps, {}> {
                         <td>{order.customer.name}</td>
                         <td>{order.name}</td>
                         <td>
-                            <Link className="btn btn-secondary" to={`/orders/${order.id}`} > Изменить </Link>
+                            <Link className="btn btn-secondary mx-1" to={`/orders/${order.id}`} > Изменить </Link>
+                            <button className="btn btn-warning mx-1"
+                                onClick={() => this.props.deleteOrder(order.id)}>
+                                Удалить
+                            </button>
                         </td>
                     </tr>
                 )}
