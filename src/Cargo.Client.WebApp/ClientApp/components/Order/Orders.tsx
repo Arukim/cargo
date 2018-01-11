@@ -3,6 +3,7 @@ import { RouteComponentProps, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { ApplicationState } from '../../store';
 import * as OrdersStore from '../../store/Orders';
+import { OrderStatusHelper } from '../../logic/statusHelper';
 
 // At runtime, Redux will merge together...
 type OrdersProps =
@@ -24,6 +25,7 @@ class OrdersComponent extends React.Component<OrdersProps, {}> {
                     <th>Id</th>
                     <th>Заказчик</th>
                     <th>Заказ</th>
+                    <th>Статус</th>
                     <th>Подробнее</th>
                 </tr>
             </thead>
@@ -33,6 +35,7 @@ class OrdersComponent extends React.Component<OrdersProps, {}> {
                         <th scope="row">{order.id}</th>
                         <td>{order.customer.name}</td>
                         <td>{order.name}</td>
+                        <td>{OrderStatusHelper.get(order.status)}</td>
                         <td>
                             <Link className="btn btn-secondary mx-1" to={`/orders/${order.id}`} > Изменить </Link>
                             <button className="btn btn-warning mx-1"

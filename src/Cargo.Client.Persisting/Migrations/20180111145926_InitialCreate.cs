@@ -43,7 +43,8 @@ namespace Cargo.Client.Persisting.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     CustomerId = table.Column<int>(nullable: false),
-                    Name = table.Column<string>(nullable: true)
+                    Name = table.Column<string>(nullable: true),
+                    Status = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -86,6 +87,7 @@ namespace Cargo.Client.Persisting.Migrations
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     OrderId = table.Column<int>(nullable: false),
                     PartId = table.Column<int>(nullable: true),
+                    Status = table.Column<int>(nullable: false),
                     SuccessfulBatchId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>

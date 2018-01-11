@@ -9,6 +9,8 @@ import { LoadPartButton } from '../Magics/LoadPartButton';
 import { LoadParts } from '../Magics/LoadParts';
 import { GetInfo } from '../Magics/GetInfo';
 
+import { OrderStatusHelper, OrderPartStatusHelper } from '../../logic/statusHelper';
+
 // At runtime, Redux will merge together...
 type OrdersProps =
     OrderStore.OrderState        // ... state we've requested from the Redux store
@@ -22,7 +24,7 @@ class OrderComponent extends React.Component<OrdersProps, {}> {
     }
 
     componentWillMount() {
-        this.props.requestOrder(this.props.match.params.id);
+        this.refresh();
     }
 
     private get uniqueOrderParts(): number[] {
@@ -30,6 +32,10 @@ class OrderComponent extends React.Component<OrdersProps, {}> {
             new Map(this.props.order
                 .orderParts.map<[number, number]>(x => [x.part.id, x.id])
             ).values());
+    }
+
+    refresh() {
+        this.props.requestOrder(this.props.match.params.id);
     }
 
     public render() {
@@ -40,7 +46,16 @@ class OrderComponent extends React.Component<OrdersProps, {}> {
                     <div>
                         <h1>Заказ "{this.order.name}"</h1>
 
-                        <div className="col-md-12 form-inline">
+                        <div className="col-md-12 form-inline my-3">
+                            <div className="mx-1">
+                                <select value={this.props.order.status}
+                                    className="form-control"
+                                    onChange={x => this.props.updateStatus(this.order.id, x.target.value, () => this.refresh())}>
+                                    {Array.from(OrderStatusHelper).map(x =>
+                                        <option key={x[0]} value={x[0]}>{x[1]}</option>
+                                    )}
+                                </select>
+                            </div>
                             <div className="mx-1">
                                 <LoadParts orderParts={this.uniqueOrderParts} />
                             </div>
@@ -49,6 +64,9 @@ class OrderComponent extends React.Component<OrdersProps, {}> {
                                     onUpdated={() => this.props.requestOrder(this.props.match.params.id)}
                                 />
                             </div>
+                        </div>
+
+                        <div className="col-md-12">
                         </div>
 
                         <div className="col-md-12">
@@ -98,11 +116,7 @@ class OrderComponent extends React.Component<OrdersProps, {}> {
                             .map(x => x.batchId)
                             .map(x => <Link key={x} to={`/batches/${x}`}>{x + " "}</Link>)}</td>
                         <td>
-                            {op.successfulBatchId == undefined ? "Не готово" :
-                                <Link to={`/batches/${op.successfulBatchId}`} className="btn btn-secondary" >
-                                    Готово в партии № {op.successfulBatchId}
-                                </Link>
-                            }
+                            {OrderPartStatusHelper.get(op.status)}
                         </td>
                         <td>
                             <div>

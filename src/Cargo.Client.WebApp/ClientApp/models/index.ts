@@ -14,6 +14,7 @@ export interface BatchOrderPart {
 
 export interface OrderPart {
     id: number;
+    status: string;
     part: Part;
     order: Order;
     successfulBatchId: number;
@@ -37,6 +38,7 @@ export interface PartInfo {
 export interface Order {
     id: number;
     name: string;
+    status: string;
     orderParts: OrderPart[];
     customer: Customer;
 }

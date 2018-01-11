@@ -98,6 +98,13 @@ export const actionCreators = {
             .then(data => dispatch({ type: 'LOADED_ORDERPART', status: data }));
         addTask(fetchTask);
     },
+    loadAll: (): AppThunkAction<KnownAction> => (dispatch, getState) => {
+        let fetchTask = fetch(`api/Magics/LoadAll`, {
+            method: "POST"
+        }).then(resp => resp.json() as Promise<MagicsStatus>)
+            .then(data => dispatch({ type: 'LOADED_ORDERPART', status: data }));
+        addTask(fetchTask);
+    },
     unloadOrderPart: (id: number): AppThunkAction<KnownAction> => (dispatch, getState) => {
         let fetchTask = fetch(`api/Magics/Unload/${id}`, {
             method: "POST"

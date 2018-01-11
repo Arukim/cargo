@@ -10,11 +10,19 @@ namespace Cargo.Client.Persisting.Entities
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        public OrderStatus Status { get; set; }
 
         public int CustomerId { get; set; }
         public virtual Customer Customer { get; set; }
 
         public virtual ICollection<OrderPart> OrderParts { get; set; }
         public virtual ICollection<Part> Parts { get; set; }
+    }
+
+    public enum OrderStatus
+    {
+        Created,
+        Confirmed,
+        Finished
     }
 }

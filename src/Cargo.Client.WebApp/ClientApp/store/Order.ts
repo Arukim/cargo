@@ -68,6 +68,17 @@ export const actionCreators = {
                 type: 'ADD_ORDERPARTS'
             });
         },
+    updateStatus: (orderId: number, status: string, cbc : () => void): AppThunkAction<KnownAction> =>
+        (dispatch, getState) => {
+            let fetchTask = fetch(`api/Orders/${orderId}/ChangeStatus`,
+                {
+                    method: "POST",
+                    headers: new Headers({ 'content-type': 'application/json' }),
+                    body: JSON.stringify(status)
+                }).then(() => cbc());
+
+            addTask(fetchTask);
+        },
     removeOrderParts: (orderId: number, orderPartsIds: number[]): AppThunkAction<KnownAction> =>
         (dispatch, getState) => {
             let fetchTask = fetch(`api/Orders/${orderId}/OrderParts`,

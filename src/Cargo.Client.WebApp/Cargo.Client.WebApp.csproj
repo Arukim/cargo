@@ -48,6 +48,7 @@
     <None Remove="ClientApp\components\Order.tsx" />
     <None Remove="ClientApp\components\Order\addOrder.tsx" />
     <None Remove="ClientApp\components\Order\Orders.tsx" />
+    <None Remove="ClientApp\logic\statusHelper.ts" />
     <None Remove="ClientApp\models\index.ts" />
     <None Remove="ClientApp\store\Batch.ts" />
     <None Remove="ClientApp\store\Batches.ts" />
@@ -80,6 +81,7 @@
     <TypeScriptCompile Include="ClientApp\components\Customer\AddOrder.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Order\EditOrder.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Order\Orders.tsx" />
+    <TypeScriptCompile Include="ClientApp\logic\statusHelper.ts" />
     <TypeScriptCompile Include="ClientApp\models\index.ts" />
     <TypeScriptCompile Include="ClientApp\store\CustomerAdd.ts" />
     <TypeScriptCompile Include="ClientApp\store\Batch.ts" />

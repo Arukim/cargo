@@ -62,21 +62,18 @@ namespace Cargo.Client.WebApp.Controllers.Api
 
             var status = magics.LoadParts(ops);
             return Ok(status);
-
         }
 
-        [HttpPost("getInfo")]
-        public async Task<IActionResult> GetInfo([FromBody] List<int> ids)
+        [HttpPost("[action]")]
+        public async Task<IActionResult> LoadAll()
         {
-            var ops = await ctx.Parts.Where(x => ids.Contains(x.Id))
-                            .Include(x => x.PartInfo)
-                            .ToListAsync();
+            var ops = await ctx.OrderParts
+                .Include(x => x.Part)
+                .Where(x => x.Order.Status == OrderStatus.Confirmed)
+                .ToListAsync();
 
-            magics.GetInfo(ops);
-
-            await ctx.SaveChangesAsync();
-
-            return Ok();
+            var status = magics.LoadParts(ops);
+            return Ok(status);
         }
 
         [HttpPost("[action]/{id}")]
@@ -98,5 +95,19 @@ namespace Cargo.Client.WebApp.Controllers.Api
             return Ok(magics.UnloadAll());
         }
 
+
+        [HttpPost("getInfo")]
+        public async Task<IActionResult> GetInfo([FromBody] List<int> ids)
+        {
+            var ops = await ctx.Parts.Where(x => ids.Contains(x.Id))
+                            .Include(x => x.PartInfo)
+                            .ToListAsync();
+
+            magics.GetInfo(ops);
+
+            await ctx.SaveChangesAsync();
+
+            return Ok();
+        }
     }
 }

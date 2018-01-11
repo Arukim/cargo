@@ -5,6 +5,7 @@ namespace Cargo.Client.Persisting.Entities
     public class OrderPart
     {
         public int Id { get; set; }
+        public OrderPartStatus Status { get; set; }
 
         public int? PartId { get; set; }
         public virtual Part Part { get; set; }
@@ -15,5 +16,12 @@ namespace Cargo.Client.Persisting.Entities
         
         public int? SuccessfulBatchId { get; set; }
         public virtual Batch SuccessfulBatch { get; set; }
+    }
+
+    public enum OrderPartStatus
+    {
+        Created,
+        InWork,
+        Finished
     }
 }

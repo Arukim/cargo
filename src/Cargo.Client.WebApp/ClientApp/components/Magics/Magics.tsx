@@ -60,7 +60,7 @@ class MagicsComponent extends React.Component<MagicsProps, {}> {
                             Текущий объём: {this.props.status.modelsVolume} мм2
                         </label>
                     </div>
-                    <div className="form-inline col-xl-4 align-self-end mt-3">
+                    <div className="form-inline col-xl-5 align-self-end mt-3">
                         <div className="mr-2">
                             <b> Действия: </b>
                         </div>
@@ -68,6 +68,10 @@ class MagicsComponent extends React.Component<MagicsProps, {}> {
                             className="btn btn-primary mx-1"
                             disabled={!this.props.isAvailable}
                             onClick={() => this.props.requestStatus()} > Обновить </button>
+                        <button
+                            className="btn btn-success mx-1"
+                            disabled={!this.props.isAvailable}
+                            onClick={() => this.props.loadAll()} > Импорт всего </button>
                         <button className="btn btn-warning mx-1"
                             disabled={!this.props.isAvailable}
                             onClick={() => this.props.unloadAll()}> Очистить сцену </button>

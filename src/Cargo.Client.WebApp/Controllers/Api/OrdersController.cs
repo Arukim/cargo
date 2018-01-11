@@ -42,6 +42,22 @@ namespace Cargo.Client.WebApp.Controllers.Api
             return await Orders.FirstOrDefaultAsync(x => x.Id == id);
         }
 
+        [HttpPost("{orderId}/changeStatus")]
+        public async Task<IActionResult> ChangeStatus(int orderId, [FromBody] OrderStatus newStatus)
+        {
+            var order = await ctx.Orders
+                .FirstOrDefaultAsync(x => x.Id == orderId);
+
+            if (order == null)
+                return BadRequest($"no order with id:{orderId} exists");
+
+            order.Status = newStatus;
+
+            await ctx.SaveChangesAsync();
+
+            return Ok();
+        }
+
         [HttpPost("{orderId}/OrderParts/{partId}/{count}")]
         public async Task<IActionResult> AddOrderParts(int orderId, int partId, int count)
         {

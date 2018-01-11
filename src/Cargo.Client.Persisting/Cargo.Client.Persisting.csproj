@@ -107,9 +107,9 @@
     <Compile Include="Entities\OrderPart.cs" />
     <Compile Include="Entities\Part.cs" />
     <Compile Include="Entities\PartInfo.cs" />
-    <Compile Include="Migrations\20180110180416_InitialCreate.cs" />
-    <Compile Include="Migrations\20180110180416_InitialCreate.designer.cs">
-      <DependentUpon>20180110180416_InitialCreate.cs</DependentUpon>
+    <Compile Include="Migrations\20180111145926_InitialCreate.cs" />
+    <Compile Include="Migrations\20180111145926_InitialCreate.designer.cs">
+      <DependentUpon>20180111145926_InitialCreate.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\CargoContextModelSnapshot.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

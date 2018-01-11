@@ -115,7 +115,7 @@ namespace Cargo.Client.WebApp.Controllers.Api
         }
 
         [HttpPost("{custId}/[action]")]
-        [RequestSizeLimit(100_000_000)]
+        [DisableRequestSizeLimit]
         public async Task<IActionResult> CreatePart(int custId, IFormFile file)
         {
             if (file == null || file.Length == 0)
