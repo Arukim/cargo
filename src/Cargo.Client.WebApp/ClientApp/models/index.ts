@@ -23,6 +23,15 @@ export interface OrderPart {
 export interface Part {
     id: number;
     name: string;
+    partInfo: PartInfo;
+}
+
+export interface PartInfo {
+    x: number;
+    y: number;
+    z: number;
+    volume: number;
+    surfaceArea: number;
 }
 
 export interface Order {

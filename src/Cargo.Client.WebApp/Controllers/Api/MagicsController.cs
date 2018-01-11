@@ -65,6 +65,20 @@ namespace Cargo.Client.WebApp.Controllers.Api
 
         }
 
+        [HttpPost("getInfo")]
+        public async Task<IActionResult> GetInfo([FromBody] List<int> ids)
+        {
+            var ops = await ctx.Parts.Where(x => ids.Contains(x.Id))
+                            .Include(x => x.PartInfo)
+                            .ToListAsync();
+
+            magics.GetInfo(ops);
+
+            await ctx.SaveChangesAsync();
+
+            return Ok();
+        }
+
         [HttpPost("[action]/{id}")]
         public IActionResult Unload(int id)
         {
@@ -83,5 +97,6 @@ namespace Cargo.Client.WebApp.Controllers.Api
         {
             return Ok(magics.UnloadAll());
         }
+
     }
 }

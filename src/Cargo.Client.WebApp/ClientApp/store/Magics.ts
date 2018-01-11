@@ -46,10 +46,19 @@ interface UnloadedOrderPart {
     status: MagicsStatus;
 }
 
+interface GetInfo {
+    type: "GET_INFO";
+}
+
+interface GotInfo {
+    type: "GOT_INFO";
+}
+
 
 type KnownAction = RequestMagicsStatus | ReceiveMagicsStatus
     | RequestAppCount | ReceiveAppCount
-    | LoadedOrderPart | UnloadedOrderPart;
+    | LoadedOrderPart | UnloadedOrderPart
+    | GetInfo | GotInfo;
 
 
 export const actionCreators = {
@@ -102,6 +111,19 @@ export const actionCreators = {
         }).then(resp => resp.json() as Promise<MagicsStatus>)
             .then(data => dispatch({ type: "LOADED_ORDERPART", status: data }));
         addTask(fetchTask);
+    },
+    getInfo: (ids: number[], cbc: () => void): AppThunkAction<KnownAction> => (dispatch, getState) => {
+        let fetchTask = fetch('api/Magics/getInfo', {
+            method: "POST",
+            headers: new Headers({ 'content-type': 'application/json' }),
+            body: JSON.stringify(ids)
+        }).then(() => {
+            dispatch({ type: "GOT_INFO" });
+            cbc();
+        });
+
+        addTask(fetchTask);
+        dispatch({ type: "GET_INFO" });
     }
 };
 
@@ -161,6 +183,16 @@ export const reducer: Reducer<MagicsState> = (state: MagicsState, incomingAction
                 ...state,
                 status: action.status,
                 loadedOrderParts: action.status.orderParts
+            };
+        case "GET_INFO":
+            return {
+                ...state,
+                isLoading: true
+            };
+        case "GOT_INFO":
+            return {
+                ...state,
+                isLoading: false
             };
         default:
             // The following line guarantees that every action in the KnownAction union has been covered by a case above

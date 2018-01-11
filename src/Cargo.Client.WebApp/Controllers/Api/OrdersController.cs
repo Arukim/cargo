@@ -24,6 +24,7 @@ namespace Cargo.Client.WebApp.Controllers.Api
             .Include(x => x.Customer)
             .Include(x => x.OrderParts)
                 .ThenInclude(op => op.Part)
+                    .ThenInclude(p => p.PartInfo)
             .Include(x => x.OrderParts)
                 .ThenInclude(op => op.BatchOrderParts)
             .OrderByDescending(x => x.Id);
@@ -77,14 +78,14 @@ namespace Cargo.Client.WebApp.Controllers.Api
         public async Task<IActionResult> RemoveOrder(int orderId)
         {
             var order = await ctx.Orders
-                .Include(x => x.Parts)
+                .Include(x => x.OrderParts)
                 .FirstOrDefaultAsync(x => x.Id == orderId);
             if(order == null)
                 return BadRequest($"no order with id:{orderId} exists");
 
-            foreach(var p in order.Parts.ToList())
+            foreach (var p in order.OrderParts.ToList())
             {
-                ctx.Parts.Remove(p);
+                ctx.OrderParts.Remove(p);
             }
             await ctx.SaveChangesAsync();
 

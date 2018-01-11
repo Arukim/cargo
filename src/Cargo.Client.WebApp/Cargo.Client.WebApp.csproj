@@ -41,6 +41,7 @@
     <None Remove="ClientApp\components\Customer\Customers.tsx" />
     <None Remove="ClientApp\components\Customer\EditCustomer.tsx" />
     <None Remove="ClientApp\components\Magics.tsx" />
+    <None Remove="ClientApp\components\Magics\GetInfo.tsx" />
     <None Remove="ClientApp\components\Magics\LoadPartButton.tsx" />
     <None Remove="ClientApp\components\Magics\LoadParts.tsx" />
     <None Remove="ClientApp\components\Magics\NewBatch.tsx" />
@@ -72,6 +73,7 @@
     <TypeScriptCompile Include="ClientApp\components\Customer\Customers.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Customer\EditCustomer.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Magics\LoadPartButton.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\Magics\GetInfo.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Magics\LoadParts.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Magics\Magics.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Batch\NewBatch.tsx" />

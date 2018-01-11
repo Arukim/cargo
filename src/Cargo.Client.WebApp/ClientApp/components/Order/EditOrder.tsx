@@ -2,11 +2,12 @@
 import { RouteComponentProps, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { ApplicationState } from './../../store';
-import { Order } from 'ClientApp/models';
+import { Order, Part } from 'ClientApp/models';
 import * as OrderStore from '../../store/Order';
 
 import { LoadPartButton } from '../Magics/LoadPartButton';
 import { LoadParts } from '../Magics/LoadParts';
+import { GetInfo } from '../Magics/GetInfo';
 
 // At runtime, Redux will merge together...
 type OrdersProps =
@@ -39,8 +40,15 @@ class OrderComponent extends React.Component<OrdersProps, {}> {
                     <div>
                         <h1>Заказ "{this.order.name}"</h1>
 
-                        <div className="col-md-12">
-                            <LoadParts orderParts={this.uniqueOrderParts} />
+                        <div className="col-md-12 form-inline">
+                            <div className="mx-1">
+                                <LoadParts orderParts={this.uniqueOrderParts} />
+                            </div>
+                            <div className="mx-1">
+                                <GetInfo orderParts={this.uniqueOrderParts}
+                                    onUpdated={() => this.props.requestOrder(this.props.match.params.id)}
+                                />
+                            </div>
                         </div>
 
                         <div className="col-md-12">
@@ -51,6 +59,20 @@ class OrderComponent extends React.Component<OrdersProps, {}> {
             </div>);
     }
 
+    private renderPartInfo(part: Part) {
+        var p = part.partInfo;
+
+        return [<td>
+            {p.x}мм {p.y}мм {p.y}мм
+        </td>,
+        <td>
+            {p.surfaceArea}мм2
+        </td>,
+        <td>
+            {p.volume}мм3
+        </td>];
+    }
+
 
     private renderOrderParts() {
         return <table className='table'>
@@ -58,7 +80,10 @@ class OrderComponent extends React.Component<OrdersProps, {}> {
                 <tr>
                     <th>Id</th>
                     <th>Название модели</th>
-                    <th>Партии </th>
+                    <th>XYZ</th>
+                    <th>Площадь поверхности</th>
+                    <th>Объем</th>
+                    <th>Jobs </th>
                     <th>Статус</th>
                     <th>Действия</th>
                 </tr>
@@ -68,6 +93,7 @@ class OrderComponent extends React.Component<OrdersProps, {}> {
                     <tr key={idx}>
                         <th scope="row">{op.id}</th>
                         <td>{op.part.name}</td>
+                        {this.renderPartInfo(op.part)}
                         <td>{op.batchOrderParts
                             .map(x => x.batchId)
                             .map(x => <Link key={x} to={`/batches/${x}`}>{x + " "}</Link>)}</td>

@@ -14,8 +14,8 @@ export const routes = <Layout>
     <Route exact path='/' component={Customers} />
     <Route path='/counter' component={Counter} />
     <Route path='/fetchdata/:startDateIndex?' component={FetchData} />
-    <Route path='/orders/:id' component={EditOrder} />
-    <Route path='/orders' component={Orders}/>
+    <Route exact path='/orders/:id' component={EditOrder} />
+    <Route exact path='/orders' component={Orders}/>
     <Route strict exact path='/batches' component={Batches} />
     <Route strict exact path='/batches/new' component={NewBatch} />
     <Route strict exact path='/batches/:id(\\d+)' component={EditBatch} />

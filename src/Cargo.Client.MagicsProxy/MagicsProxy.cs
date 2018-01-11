@@ -113,6 +113,37 @@ namespace Cargo.Client.MagicsProxy
             }
         }
 
+        public void GetInfo(List<Part> parts)
+        {
+            var magics = new ApplicationMagics();
+            try
+            {
+                foreach (var part in parts)
+                {
+                    magics.LoadSTLPart(PathBuilder.GetPartFile(part));
+
+                    var model = Int32.Parse(magics.GetPlatformProperty("NumOfStl")) - 1;
+
+                    var pi = part.PartInfo;
+
+                    Func<string, double> getDouble = (str) => Double.Parse(magics.GetModelProperty(model, str), CultureInfo.InvariantCulture.NumberFormat);
+
+                    pi.X = getDouble("StlDimXmm");
+                    pi.Y = getDouble("StlDimXmm");
+                    pi.Z = getDouble("StlDimXmm");
+                    pi.Volume = getDouble("StlVolumeMM");
+                    pi.SurfaceArea = getDouble("StlSurfaceAreaMM");
+
+                    magics.UnloadModel(model);
+                }
+            }
+            finally
+            {
+                Marshal.ReleaseComObject(magics);
+            }
+
+        }
+
         public MagicsStatus Save(Batch batch)
         {
             var magics = new ApplicationMagics();

@@ -79,7 +79,7 @@ namespace Cargo.Client.WebApp.Controllers.Api
 
             foreach (var file in req.Files)
             {
-                var part = new Part { Name = file.FileName };
+                var part = new Part { Name = file.FileName, PartInfo = new PartInfo { } };
 
                 order.Parts.Add(part);
                 parts.Add(part);
