@@ -1,0 +1,1 @@
+sc create Cargo binPath= "%~dp0Cargo.Client.WebApp.exe" start= auto
