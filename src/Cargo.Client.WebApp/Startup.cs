@@ -6,6 +6,7 @@ using Cargo.Client.MagicsProxy;
 using Cargo.Client.Persisting;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.SpaServices.Webpack;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -34,6 +35,12 @@ namespace Cargo.Client.WebApp
             {
                 options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
                 options.SerializerSettings.Converters.Add(new Newtonsoft.Json.Converters.StringEnumConverter());
+            });
+
+            services.Configure<FormOptions>(x =>
+            {
+                x.ValueLengthLimit = int.MaxValue;
+                x.MultipartBodyLengthLimit = int.MaxValue; // In case of multipart
             });
         }
 
@@ -66,6 +73,7 @@ namespace Cargo.Client.WebApp
                     name: "spa-fallback",
                     defaults: new { controller = "Home", action = "Index" });
             });
+            
         }
     }
 }

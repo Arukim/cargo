@@ -52,6 +52,7 @@ namespace Cargo.Client.WebApp.Controllers.Api
         }
 
         [HttpPost("{custId}/orders")]
+        [DisableRequestSizeLimit]
         public async Task<IActionResult> CreateOrder(int custId, CreateOrder req)
         {
             var cust = await ctx.Customers
@@ -112,22 +113,6 @@ namespace Cargo.Client.WebApp.Controllers.Api
             await ctx.SaveChangesAsync();
 
             return Ok(order.Id);
-        }
-
-        [HttpPost("{custId}/[action]")]
-        [DisableRequestSizeLimit]
-        public async Task<IActionResult> CreatePart(int custId, IFormFile file)
-        {
-            if (file == null || file.Length == 0)
-                return Content("file not selected");
-
-            var cust = await ctx.Customers
-                .FirstOrDefaultAsync(c => c.Id == custId);
-
-            if (cust == null)
-                return BadRequest("no such customer");
-
-            throw new Exception();
         }
     }   
 
