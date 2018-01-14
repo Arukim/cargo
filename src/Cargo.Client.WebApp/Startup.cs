@@ -47,6 +47,12 @@ namespace Cargo.Client.WebApp
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
+            {
+                var context = serviceScope.ServiceProvider.GetRequiredService<CargoContext>();
+                context.Database.Migrate();
+            }
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -73,7 +79,7 @@ namespace Cargo.Client.WebApp
                     name: "spa-fallback",
                     defaults: new { controller = "Home", action = "Index" });
             });
-            
+
         }
     }
 }

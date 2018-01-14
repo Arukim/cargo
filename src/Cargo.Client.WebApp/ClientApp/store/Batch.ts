@@ -63,6 +63,17 @@ export const actionCreators = {
                     .then(data => dispatch({ type: 'RECEIVE_BATCH', batch: data }));
                 addTask(fetchTask);
             });        
+    },
+    setFailed: (opId: number, batchId: number): AppThunkAction<KnownAction> => (dispatch, getState) => {
+        let fetchTask = fetch(`api/OrderParts/${opId}/failed`,
+            {
+                method: "PUT"
+            }).then(() => {
+                fetchTask = fetch(`api/Batches/${batchId}`)
+                    .then(resp => resp.json() as Promise<Batch>)
+                    .then(data => dispatch({ type: 'RECEIVE_BATCH', batch: data }));
+                addTask(fetchTask);
+            });
     }
 }
 

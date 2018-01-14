@@ -42,6 +42,22 @@ namespace Cargo.Client.WebApp.Controllers.Api
 
             orderPart.SuccessfulBatch = batch;
 
+            orderPart.Status = OrderPartStatus.Finished;
+
+            await ctx.SaveChangesAsync();
+
+            return Ok();
+        }
+
+        [HttpPut("{partId}/failed")]
+        public async Task<IActionResult> FailedDetail(int partId)
+        {
+            var orderPart = await ctx.OrderParts.FirstOrDefaultAsync(x => x.Id == partId);
+            if (orderPart == null)
+                return BadRequest("no such part");
+            
+            orderPart.Status = OrderPartStatus.Created;
+
             await ctx.SaveChangesAsync();
 
             return Ok();

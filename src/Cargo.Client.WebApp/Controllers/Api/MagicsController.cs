@@ -70,6 +70,7 @@ namespace Cargo.Client.WebApp.Controllers.Api
             var ops = await ctx.OrderParts
                 .Include(x => x.Part)
                 .Where(x => x.Order.Status == OrderStatus.Confirmed)
+                .Where(x => x.Status == OrderPartStatus.Created)
                 .ToListAsync();
 
             var status = magics.LoadParts(ops);

@@ -38,14 +38,16 @@ namespace Cargo.Client.WebApp.Controllers.Api
 
             await ctx.SaveChangesAsync();
 
+            ops.ForEach(op => op.Status = OrderPartStatus.InWork);
+
             ctx.BatchOrderParts.AddRange(ops.Select(op => new BatchOrderPart
             {
                 OrderPartId = op.Id,
                 BatchId = batch.Id
             }).ToList());
-            
+
             await ctx.SaveChangesAsync();
-            
+
             return Ok(batch.Id);
         }
 

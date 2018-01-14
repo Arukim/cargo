@@ -80,14 +80,14 @@ class OrderComponent extends React.Component<OrdersProps, {}> {
     private renderPartInfo(part: Part) {
         var p = part.partInfo;
 
+        let toCm = (x: number) => (x / 10).toFixed(1);
+        let toCm3 = (x: number) => (x / 1000).toFixed(3);
+
         return [<td>
-            {p.x}мм {p.y}мм {p.y}мм
+            {toCm(p.x)} x {toCm(p.y)} x {toCm(p.z)}
         </td>,
         <td>
-            {p.surfaceArea}мм2
-        </td>,
-        <td>
-            {p.volume}мм3
+            {p.volume < 0 ? <b> {toCm3(p.volume)} </b> : <span> {toCm3(p.volume)} </span>}
         </td>];
     }
 
@@ -98,9 +98,8 @@ class OrderComponent extends React.Component<OrdersProps, {}> {
                 <tr>
                     <th>Id</th>
                     <th>Название модели</th>
-                    <th>XYZ</th>
-                    <th>Площадь поверхности</th>
-                    <th>Объем</th>
+                    <th>Габариты, см</th>
+                    <th>Объем, см3</th>
                     <th>Jobs </th>
                     <th>Статус</th>
                     <th>Действия</th>
