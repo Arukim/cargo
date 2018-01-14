@@ -10,14 +10,23 @@ namespace Cargo.Client.Logic
 {
     public class PathBuilder
     {
+        public static string GetBasePath()
+        {
+            var path = @"C:\soft\cargo\wwwroot\upload";
+#if DEBUG
+            path = Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot\upload");
+#endif
+            return path;
+        }
+
         public static string GetPartDirectory(Part part)
         {
-            return Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/upload", part.OrderId.ToString());
+            return Path.Combine(GetBasePath(), part.OrderId.ToString());
         }
 
         public static string GetPartDirectory(Order order)
         {
-            return Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/upload", order.Id.ToString());
+            return Path.Combine(GetBasePath(), order.Id.ToString());
         }
 
         public static string GetPartFile(Part part)
@@ -27,7 +36,7 @@ namespace Cargo.Client.Logic
 
         public static string GetBatchDirectory()
         {
-            return Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/upload", "batches");
+            return Path.Combine(GetBasePath(), "batches");
         }
 
         public static string CreateBatchFilename(Batch batch)
