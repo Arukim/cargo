@@ -46,9 +46,9 @@ class EditBatchComponent extends React.Component<EditBatchProps, {}>{
             let custName = val.order.customer.name;
             let currValue = acc.get(custName);
             if (currValue) {
-                currValue.push(val.part.id);
+                currValue.push(val.id);
             } else {
-                currValue = [val.part.id];
+                currValue = [val.id];
                 acc.set(custName, currValue);
             }
             return acc;
