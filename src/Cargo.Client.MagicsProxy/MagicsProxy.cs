@@ -113,7 +113,7 @@ namespace Cargo.Client.MagicsProxy
             }
         }
 
-        public void GetInfo(List<Part> parts)
+        public void GetInfo(IEnumerable<Part> parts)
         {
             var magics = new ApplicationMagics();
             try
@@ -124,9 +124,14 @@ namespace Cargo.Client.MagicsProxy
 
                     var model = Int32.Parse(magics.GetPlatformProperty("NumOfStl")) - 1;
 
+                    
                     var pi = part.PartInfo;
 
-                    Func<string, double> getDouble = (str) => Double.Parse(magics.GetModelProperty(model, str), CultureInfo.InvariantCulture.NumberFormat);
+                    Func<string, double> getDouble = (str) =>
+                    {
+                        var v = magics.GetModelProperty(model, str);
+                        return Double.Parse(v, CultureInfo.InvariantCulture.NumberFormat);
+                    };                   
 
                     pi.X = getDouble("StlDimXmm");
                     pi.Y = getDouble("StlDimXmm");

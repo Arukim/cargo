@@ -100,11 +100,13 @@ namespace Cargo.Client.WebApp.Controllers.Api
         [HttpPost("getInfo")]
         public async Task<IActionResult> GetInfo([FromBody] List<int> ids)
         {
-            var ops = await ctx.Parts.Where(x => ids.Contains(x.Id))
-                            .Include(x => x.PartInfo)
+            var ops = await ctx.OrderParts
+                            .Where(x => ids.Contains(x.Id))
+                            .Include(x => x.Part)
+                            .ThenInclude(x => x.PartInfo)
                             .ToListAsync();
 
-            magics.GetInfo(ops);
+            magics.GetInfo(ops.Select(x => x.Part));
 
             await ctx.SaveChangesAsync();
 
