@@ -19,22 +19,29 @@ namespace Cargo.Client.WebApp
             var exePath = Process.GetCurrentProcess().MainModule.FileName;
             var directoryPath = Path.GetDirectoryName(exePath);
 
-            var host = BuildWebHost(args, directoryPath);
 
             if (Debugger.IsAttached || args.Contains("--debug"))
             {
-                host.Run();
+                BuildWebHost(args).Run();
             }
             else
             {
+                var host = BuildWebHostService(args, directoryPath);
                 host.RunAsService();
             }
+
         }
 
-        public static IWebHost BuildWebHost(string[] args, string contentRoot) =>
-            WebHost.CreateDefaultBuilder(args)  
+        public static IWebHost BuildWebHostService(string[] args, string contentRoot) =>
+            WebHost.CreateDefaultBuilder(args)
                 .UseContentRoot(contentRoot)
                 .UseStartup<Startup>()
                 .Build();
+
+        public static IWebHost BuildWebHost(string[] args) =>
+            WebHost.CreateDefaultBuilder(args)
+                .UseStartup<Startup>()
+                .Build();
+
     }
 }
