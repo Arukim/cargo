@@ -2,6 +2,7 @@
 import { Action, Reducer, ActionCreator } from 'redux';
 import { AppThunkAction } from './';
 import { Customer } from 'ClientApp/models';
+import { MagicsStatus } from 'ClientApp/models';
 
 export interface CustomersState {
     isLoading: boolean;
@@ -26,6 +27,14 @@ export const actionCreators = {
             .then(data => dispatch({ type: 'RECEIVE_CUSTOMERS', customers: data }));
         addTask(fetchTask);
         dispatch({ type: 'REQUEST_CUSTOMERS' });
+    },
+    loadAll: (custId: number): AppThunkAction<any> => (dispatch, getState) => {
+
+        let fetchTask = fetch(`api/Customers/${custId}/loadAll`, { method: "POST" })
+            .then(resp => resp.json() as Promise<MagicsStatus>)
+            .then(data => dispatch({ type: 'RECEIVE_STATUS', status: data }));
+
+        addTask(fetchTask);
     }
 }
 

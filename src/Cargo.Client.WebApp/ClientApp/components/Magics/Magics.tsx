@@ -57,7 +57,7 @@ class MagicsComponent extends React.Component<MagicsProps, {}> {
                             Моделей загружено: {this.props.status.modelsCount}
                         </label>
                         <label className="form-control mx-1 label-info">
-                            Текущий объём: {this.props.status.modelsVolume} мм2
+                            Текущий объём: {this.props.status.modelsVolume / 1000} см3
                         </label>
                     </div>
                     <div className="form-inline col-xl-5 align-self-end mt-3">

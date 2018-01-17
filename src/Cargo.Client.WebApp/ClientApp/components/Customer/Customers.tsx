@@ -35,11 +35,16 @@ class CustomersComponent extends React.Component<CustomersProps, {}> {
                                 className="btn btn-secondary mx-1">
                                 Редактировать
                             </Link>
+                            <button className="btn btn-info mx-1"
+                                onClick={() => this.props.loadAll(cust.id)}
+                            >
+                                Загрузить все
+                            </button>
                             <Link className="btn btn-success mx-1"
                                 to={`/customers/${cust.id}/orders/add`}
                             >
                                 Новый заказ
-                        </Link>
+                            </Link>
                         </td>
                     </tr>
                 )}
