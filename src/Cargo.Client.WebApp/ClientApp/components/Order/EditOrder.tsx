@@ -2,7 +2,7 @@
 import { RouteComponentProps, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { ApplicationState } from './../../store';
-import { Order, Part } from 'ClientApp/models';
+import { Order, Part, OrderPart } from 'ClientApp/models';
 import * as OrderStore from '../../store/Order';
 
 import { LoadPartButton } from '../Magics/LoadPartButton';
@@ -10,6 +10,14 @@ import { LoadParts } from '../Magics/LoadParts';
 import { GetInfo } from '../Magics/GetInfo';
 
 import { OrderStatusHelper, OrderPartStatusHelper } from '../../logic/statusHelper';
+
+interface GroupedOrderPart {
+    part: Part;
+    orderParts: OrderPart[];
+    other: number;
+    finished: number;
+    inPrint: number;
+}
 
 // At runtime, Redux will merge together...
 type OrdersProps =
@@ -36,6 +44,14 @@ class OrderComponent extends React.Component<OrdersProps, {}> {
 
     refresh() {
         this.props.requestOrder(this.props.match.params.id);
+    }
+
+    clone(orderId: number, partId: number) {
+        var num = window.prompt("Введите количество", "1");
+        if (num == null)
+            return;
+
+        this.props.clonePart(orderId, partId, +num);
     }
 
     public render() {
@@ -91,8 +107,24 @@ class OrderComponent extends React.Component<OrdersProps, {}> {
         </td>];
     }
 
-
     private renderOrderParts() {
+        var groupedOrders = this.order.orderParts.reduce<GroupedOrderPart[]>((prev, curr) => {
+            var elem = prev.find(x => x.part.id == curr.part.id);
+            if (elem == undefined) {
+                elem = { part: curr.part, orderParts: [], finished: 0, inPrint: 0, other: 0 };
+                prev.push(elem);
+            }
+            elem.orderParts.push(curr);
+            if (curr.status == "InPrint") {
+                elem.inPrint++;
+            } else if (curr.status == "Finished") {
+                elem.finished++;
+            } else {
+                elem.other++;
+            }
+
+            return prev;
+        }, []).sort((a, b) => a.part.id - b.part.id);
         return <table className='table'>
             <thead>
                 <tr>
@@ -100,30 +132,37 @@ class OrderComponent extends React.Component<OrdersProps, {}> {
                     <th>Название модели</th>
                     <th>Габариты, см</th>
                     <th>Объем, см3</th>
-                    <th>Jobs </th>
+                    <th>Количество</th>
                     <th>Статус</th>
                     <th>Действия</th>
                 </tr>
             </thead>
             <tbody>
-                {this.order.orderParts.map((op, idx) =>
-                    <tr key={idx}>
-                        <th scope="row">{op.id}</th>
+                {groupedOrders.map((op, idx) =>
+                    <tr key={idx} >
+                        <th scope="row">{op.part.id}</th>
                         <td>{op.part.name}</td>
                         {this.renderPartInfo(op.part)}
-                        <td>{op.batchOrderParts
-                            .map(x => x.batchId)
-                            .map(x => <Link key={x} to={`/batches/${x}`}>{x + " "}</Link>)}</td>
-                        <td>
-                            {OrderPartStatusHelper.get(op.status)}
-                        </td>
+                        <td>{op.orderParts.length} </td>
+                        <td className={op.orderParts.length == op.finished ? "bg-success" : ""}>
+                            [{op.other}-{op.inPrint}-{op.finished}]
+                            </td>
                         <td>
                             <div>
-                                <LoadPartButton className="mx-1" orderPartId={op.id} />
-                                <button className="btn btn-warning mx-1"
-                                    onClick={() => this.props.removeOrderParts(this.order.id, [op.id])}>
-                                    Удалить
+                                <button className="btn btn-info mx-1"
+                                    onClick={() => this.clone(this.order.id, op.orderParts[0].part.id)}>
+                                    Добавить
                                     </button>
+                                {
+                                    op.other > 0 ?
+                                        <button className="btn btn-warning mx-1"
+                                            onClick={() => this.props.removeOrderParts(this.order.id,
+                                                [op.orderParts.filter(x => x.status == "InWork" || x.status == "Created")[0].id])}>
+                                            Удалить
+                                    </button>
+                                        :
+                                        null
+                                }
                             </div>
                         </td>
                     </tr>

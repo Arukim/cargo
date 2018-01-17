@@ -99,6 +99,18 @@ export const actionCreators = {
             dispatch({
                 type: 'REMOVE_ORDERPARTS'
             });
+        },
+    clonePart: (orderId: number, partId: number, count: number): AppThunkAction<KnownAction> =>
+        (dispatch, getState) => {
+            let fetchTask = fetch(`api/Orders/${orderId}/clonePart/${partId}/${count}`,
+                {
+                    method: "POST"
+                })
+                .then(resp => resp.json() as Promise<OrderPart[]>)
+                .then(data => {
+                    dispatch({ type: 'ADDED_ORDERPARTS', orderParts: data });
+                });
+            addTask(fetchTask);
         }
 
 };

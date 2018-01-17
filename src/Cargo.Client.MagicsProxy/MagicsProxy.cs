@@ -8,6 +8,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Text.RegularExpressions;
 
 namespace Cargo.Client.MagicsProxy
 {
@@ -166,9 +167,10 @@ namespace Cargo.Client.MagicsProxy
 
         protected string StlName(OrderPart op)
         {
-            return $"{op.Id}_{op.Part.Filename}";
+            return $"{op.Part.Filename}-{op.Id}";
         }
 
+        private readonly Regex fileReg = new Regex(".*-(\\d*)$", RegexOptions.Compiled);
         protected MagicsStatus ReadStatus(ApplicationMagics magics)
         {
             var vol = magics.GetPlatformProperty("VolumeMM");
@@ -179,14 +181,10 @@ namespace Cargo.Client.MagicsProxy
             for (int i = 0; i < numOfStl; i++)
             {
                 var name = magics.GetModelProperty(i, "StlName");
-                var parts = name.Split('_');
-                if (parts.Length > 1)
+                var match = fileReg.Match(name);
+                if (match.Success)
                 {
-                    var res = 0;
-                    if (Int32.TryParse(parts[0], out res))
-                    {
-                        partList.Add(res);
-                    }
+                    partList.Add(Int32.Parse(match.Groups[1].Value));
                 }
             }
 

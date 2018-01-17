@@ -9,7 +9,6 @@ const orderStatusHelper = {
 const orderPartStatusHelper = {
     Created: "Создана",
     InWork: "В работе",
-    InPrint: "В печати",
     Finished: "Завершена"
 };
 

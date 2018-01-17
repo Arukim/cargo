@@ -133,6 +133,31 @@ namespace Cargo.Client.WebApp.Controllers.Api
 
             return Ok();
         }
+
+        [HttpPost("{orderId}/clonePart/{partId}/{count}")]
+        public async Task<IActionResult> ClonePart(int orderId, int partId, int count)
+        {
+            var order = await ctx.Orders.Include(x => x.OrderParts).FirstOrDefaultAsync(x => x.Id == orderId);
+
+            if (order == null)
+                return BadRequest($"no order with id:{orderId} exists");
+
+            var part = await ctx.Parts.FirstOrDefaultAsync(x => x.Id == partId);
+            if(part == null || part.OrderId != order.Id)
+                return BadRequest($"wrong part");
+
+            var newOrderParts = Enumerable.Range(0, count).Select(x => new OrderPart
+            {
+                Part = part,
+                Order = order
+            }).ToList();
+
+            await ctx.OrderParts.AddRangeAsync(newOrderParts);
+
+            await ctx.SaveChangesAsync();
+
+            return Ok(newOrderParts);
+        }
     }
 
 

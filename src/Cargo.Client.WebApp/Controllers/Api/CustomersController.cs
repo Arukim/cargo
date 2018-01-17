@@ -87,7 +87,9 @@ namespace Cargo.Client.WebApp.Controllers.Api
 
                 await ctx.SaveChangesAsync();
 
-                var filename = $"{part.Id}_{file.FileName}";
+                var nameOnly = Path.GetFileNameWithoutExtension(file.FileName);
+                var ext = Path.GetExtension(file.FileName);
+                var filename = $"{nameOnly}_id_{part.Id}{ext}";
                 var filePath = Path.Combine(path, filename);
 
                 using (var stream = new FileStream(filePath, FileMode.CreateNew))
