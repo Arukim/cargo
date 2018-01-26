@@ -15,8 +15,8 @@ namespace Cargo.Client.Persisting.Entities
         public int CustomerId { get; set; }
         public virtual Customer Customer { get; set; }
 
-        public virtual ICollection<OrderPart> OrderParts { get; set; }
-        public virtual ICollection<Part> Parts { get; set; }
+        public ICollection<OrderPart> OrderParts { get; set; }
+        public ICollection<Part> Parts { get; set; }
     }
 
     public enum OrderStatus

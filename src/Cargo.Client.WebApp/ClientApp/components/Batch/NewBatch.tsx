@@ -118,9 +118,9 @@ class NewBatchComponent extends React.Component<NewBatchProps, NewBatchState>{
                         <tr key={op.id}>
                             <th scope="row">{idx}</th>
                             <td>{op.id}</td>
-                            <td>{op.order.name} </td>
-                            <td>{op.order.customer.name} </td>
-                            <td>{op.part.name} </td>
+                            <td>{op.order} </td>
+                            <td>{op.customer} </td>
+                            <td>{op.part} </td>
                         </tr>
                     )}
                 </tbody>

@@ -9,6 +9,6 @@ namespace Cargo.Client.Persisting.Entities
         public string Name { get; set; }
         public string Filename { get; set; }
 
-        public virtual ICollection<BatchOrderPart> BatchOrderParts { get; set; }
+        public ICollection<BatchOrderPart> BatchOrderParts { get; set; }
     }
 }

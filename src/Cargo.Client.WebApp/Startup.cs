@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Cargo.Client.MagicsProxy;
 using Cargo.Client.Persisting;
 using Microsoft.AspNetCore.Builder;
@@ -37,7 +38,10 @@ namespace Cargo.Client.WebApp
                 options.SerializerSettings.Converters.Add(new Newtonsoft.Json.Converters.StringEnumConverter());
             });
 
-            services.Configure<FormOptions>(x =>
+			services.AddAutoMapper();
+
+
+			services.Configure<FormOptions>(x =>
             {
                 x.ValueLengthLimit = int.MaxValue;
                 x.MultipartBodyLengthLimit = int.MaxValue; // In case of multipart

@@ -21,6 +21,13 @@ export interface OrderPart {
     batchOrderParts: BatchOrderPart[];
 }
 
+export interface OrderPartQueryResponse {
+	id: number;
+	order: string;
+	customer: string;
+	part: string;
+}
+
 export interface Part {
     id: number;
     name: string;

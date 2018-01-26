@@ -1,11 +1,11 @@
 ﻿import { fetch, addTask } from 'domain-task';
 import { Action, Reducer, ActionCreator } from 'redux';
 import { AppThunkAction } from './';
-import { OrderPart } from 'ClientApp/models';
+import { OrderPartQueryResponse } from 'ClientApp/models';
 
 export interface OrderPartsState {
     isLoading: boolean;
-    orderParts: OrderPart[];
+	orderParts: OrderPartQueryResponse[];
 }
 
 // Actions
@@ -16,7 +16,7 @@ interface RequestOrderParts {
 
 interface ReceiveOrderParts {
     type: 'RECEIVE_ORDERPARTS';
-    orderParts: OrderPart[];
+	orderParts: OrderPartQueryResponse[];
 }
 
 type KnownAction = RequestOrderParts | ReceiveOrderParts;
@@ -29,7 +29,7 @@ export const actionCreators = {
                 body: JSON.stringify({ orderPartIds: values }),
                 headers: new Headers({ 'content-type': 'application/json' })
             })
-            .then(response => response.json() as Promise<OrderPart[]>)
+			.then(response => response.json() as Promise<OrderPartQueryResponse[]>)
             .then(data => dispatch({ type: 'RECEIVE_ORDERPARTS', orderParts: data }));
 
         addTask(fetchTask);
