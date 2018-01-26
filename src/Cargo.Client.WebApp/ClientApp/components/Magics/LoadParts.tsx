@@ -4,7 +4,8 @@ import { ApplicationState } from '../../store';
 import * as MagicsStore from '../../store/Magics';
 
 interface LoadPartButtonOwnProps {
-    orderParts: number[];
+	orderParts: number[];
+	text?: string;
 }
 
 
@@ -25,8 +26,8 @@ class LoadPartsComponent extends React.Component<LoadPartsButtonState, {}> {
             <button
                 className={"btn btn-primary"}
                 disabled={!this.props.isAvailable}
-                onClick={() => this.onClick()}>
-                Просмотр моделей
+				onClick={() => this.onClick()}>
+				{this.props.text || "Просмотр моделей"}
             </button>
         );
     }
