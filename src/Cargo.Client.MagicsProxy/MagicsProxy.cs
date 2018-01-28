@@ -125,14 +125,14 @@ namespace Cargo.Client.MagicsProxy
 
                     var model = Int32.Parse(magics.GetPlatformProperty("NumOfStl")) - 1;
 
-                    
+
                     var pi = part.PartInfo;
 
                     Func<string, double> getDouble = (str) =>
                     {
                         var v = magics.GetModelProperty(model, str);
                         return Double.Parse(v, CultureInfo.InvariantCulture.NumberFormat);
-                    };                   
+                    };
 
                     pi.X = getDouble("StlDimXmm");
                     pi.Y = getDouble("StlDimXmm");
@@ -157,6 +157,36 @@ namespace Cargo.Client.MagicsProxy
             {
                 Directory.CreateDirectory(PathBuilder.GetBatchDirectory());
                 magics.SaveProject(@"C:\temp\test.magics");
+                return ReadStatus(magics);
+            }
+            finally
+            {
+                Marshal.ReleaseComObject(magics);
+            }
+        }
+
+        public MagicsStatus SaveAllModels(IEnumerable<OrderPart> parts)
+        {
+            var magics = new ApplicationMagics();
+            try
+            {
+                var numOfStl = Int32.Parse(magics.GetPlatformProperty("NumOfStl"));
+
+                for (int i = 0; i < numOfStl; i++)
+                {
+                    var name = magics.GetModelProperty(i, "StlName");
+                    var match = fileReg.Match(name);
+
+                    var partNum = Int32.Parse(match.Groups[1].Value);
+
+                    var op = parts.FirstOrDefault(x => x.Id == partNum);
+
+                    if (op != null)
+                    {
+                        var res = magics.SaveModelStl(i, PathBuilder.GetPartFile(op.Part));
+                    }
+                }
+
                 return ReadStatus(magics);
             }
             finally

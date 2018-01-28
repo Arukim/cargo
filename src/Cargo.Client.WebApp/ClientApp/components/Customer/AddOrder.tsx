@@ -105,14 +105,10 @@ class AddOrderComponent extends React.Component<AddOrderProps, AddOrderState>
                                         multiple
                                         accept=".stl"
                                         defaultValue="Pick model file"
+                                        onChange={() => this.onFilesSelected()}
                                     ></input>
                                 </div>
                             </div>
-                            <button
-                                className="btn btn-success mb-4"
-                                onClick={() => this.onFilesSelected()}>
-                                Добавить
-                            </button>
                             {this.renderFiles()}
                             <button
                                 className="btn btn-success"

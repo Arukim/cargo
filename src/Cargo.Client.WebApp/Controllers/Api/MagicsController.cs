@@ -106,6 +106,8 @@ namespace Cargo.Client.WebApp.Controllers.Api
                             .ThenInclude(x => x.PartInfo)
                             .ToListAsync();
 
+            magics.SaveAllModels(ops);
+
             magics.GetInfo(ops.Select(x => x.Part));
 
             await ctx.SaveChangesAsync();

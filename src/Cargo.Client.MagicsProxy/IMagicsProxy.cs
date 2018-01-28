@@ -18,5 +18,6 @@ namespace Cargo.Client.MagicsProxy
 
         void GetInfo(IEnumerable<Part> parts);
         MagicsStatus Save(Batch batch);
+        MagicsStatus SaveAllModels(IEnumerable<OrderPart> parts);
     }
 }
